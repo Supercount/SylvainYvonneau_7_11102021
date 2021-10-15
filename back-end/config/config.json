@@ -7,16 +7,16 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "Crecre",
-    "password": "crecreIIE2011!",
-    "database": "database_test",
+    "username": "root",
+    "password": "root",
+    "database": "grouporama",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "Crecre",
-    "password": "crecreIIE2011!",
-    "database": "database_production",
+    "username": "root",
+    "password": "root",
+    "database": "grouporama",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

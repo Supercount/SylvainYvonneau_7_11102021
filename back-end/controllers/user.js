@@ -72,5 +72,36 @@ module.exports = {
         .catch( error => {
             return res.status(500).json({error : error});
         });
+    },
+    getUsers: function(req,res,next) {
+        User.findAll()
+        .then( retour => {
+            return res.status(200).json(retour);
+        })
+        .catch( error => {
+            return res.status(400).json({error : error});
+        })
+    },
+    getUser: function(req,res,next) {
+        User.findOne({
+            where: { id: req.params.id }
+        })
+        .then( retour => {
+            return res.status(200).json(retour);
+        })
+        .catch( error => {
+            return res.status(400).json({error : error});
+        })
+    },
+    deleteUser: function(req,res,next) {
+        User.destroy({
+            where: { id: req.params.id }
+        })
+        .then( retour => {
+            return res.status(200).json(retour);
+        })
+        .catch( error => {
+            return res.status(400).json({error : "problème de récup"});
+        })
     }
 }
