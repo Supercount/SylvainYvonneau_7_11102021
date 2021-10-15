@@ -35,51 +35,30 @@ module.exports = {
                     });
                 })
                 .catch(error => {
-                    return res.status(500).json({error : `${error} catch du bcryptsjs`});
+                    return res.status(500).json({error : error});
                 });
             } else { () => {
                 return res.status(409).json({error: 'Utilisateur existant' });
                 }
             }
         })
-        .catch((error) => res.status(500).json({error: `${error} catch du findOne`}));
-    
-        // bcryptjs.hash(password,10)
-        // .then( hash => {
-        //     // const user = new User({
-        //     //     email : req.body.email,
-        //     //     password : hash,
-        //     //     username : req.body.username,
-        //     //     isadmin : false
-        //     // });
-        //     const user = User.build({ 
-        //         email : email,
-        //         password : hash,
-        //         username : username,
-        //         isadmin : isAdmin
-        //     });
-        //     user.save()
-        //     .then( () => res.status(201).json({message : "Utilisateur inscrit!"}))
-        //     .catch(error => {
-        //         return res.status(400).json({error : `${error} problème de save1`});
-        //     });
-        // })
-        // .catch( error => {
-        // return res.status(500).json({error : `${error} problème de save2`});
-        // })
+        .catch((error) => res.status(500).json({error: error}));
     },    
     login: function(req, res, next) {
-        User.findOne({email : req.body.email})
-        .then( user => {
-            if (user == null) {
+        let newMail = req.body.email;
+        let newPass = req.body.password;
+        User.findOne({
+            where: { email: newMail }
+        })
+        .then( userFound => {
+            if (!userFound) {
                 return res.status(401).json({error : "Utilisateur inexistant!"});
             } else {
-                bcryptjs.compare(req.body.password,user.password)
+                bcryptjs.compare(newPass,userFound.password)
                 .then( isValid => {
                     if (isValid) {
                         return res.status(200).json({
-                            userId : user._id,
-                            token : jwt.sign({userId : user._id}, process.env.SECRET_TOKEN, {expiresIn : "1d"})
+                            token : jwt.sign({userId : userFound.id, isAdmin : userFound.isAdmin}, process.env.SECRET_TOKEN, {expiresIn : "1d"})
                         });
                     } else {
                         return res.status(401).json({error : "Mot de passe incorrect!"});
