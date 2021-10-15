@@ -1,6 +1,6 @@
 module.exports = {
     HOST: "localhost",
-    USER: "Crecre",
+    USER: "root",
     PASSWORD: process.env.db_PASSWORD,
     DB: "grouporama",
     dialect: "mysql",

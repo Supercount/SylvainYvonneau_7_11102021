@@ -6,12 +6,6 @@ const userRoutes = require('./routes/user');
 // const saucesRoutes = require('./routes/sauces');
 const helmet = require('helmet');
 
-// mongoose.connect(process.env.DB_URL,{
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-// .then(() => console.log('Connexion à MongoDB réussie !'))
-// .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
 app.use(helmet());
@@ -32,12 +26,6 @@ app.use('/images', express.static(path.join(__dirname, "images")));
 
 app.use('/api/auth', userRoutes);
 // app.use('/api/sauces', saucesRoutes);
-
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
 
 
 module.exports = app;
