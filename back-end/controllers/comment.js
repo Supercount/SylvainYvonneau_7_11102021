@@ -9,7 +9,7 @@ module.exports = {
         Comment.findAll({
             // attributes: [ 'contenu', 'date', 'idUser'],
             order: [['date', 'DESC']],
-            // where: { idPost: req.params.idpost }
+            where: { idPost: req.params.idpost }
             // include: [{
             //     model: 'User',
             //     required: true
@@ -28,7 +28,6 @@ module.exports = {
         let post = req.params.idpost;
         let writer = jwt.recupereId(req);
         let dateCreate = Date.now();
-        console.log(post);
         Comment.create({
             contenu: newContent,
             idPost: post,

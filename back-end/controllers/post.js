@@ -46,17 +46,16 @@ module.exports = {
                 })
                 .then( retour => {
                     if (retour == 1) {
-                        return res.status(200).json({message : "Commentaire supprimé!"});
+                        return res.status(200).json({message : "Post et commentaires supprimés!"});
                     } else {
-                        return res.status(400).json({error : "Problème lors de la suppression des commentaires"});
+                        return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
                     }
                 })
                 .catch( error => {
                     return res.status(400).json({error : error});
                 })
-                return res.status(200).json({message : "Post supprimé!"});
             } else {
-                return res.status(400).json({error : "Problème lors de la suppressiondu post"});
+                return res.status(400).json({error : "Problème lors de la suppression du post"});
             }
         })
         .catch( error => {
