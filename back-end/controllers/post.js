@@ -1,6 +1,7 @@
 const db = require("../models");
 const Post = db.Post;
 const User = db.User;
+const Comment = db.Comment;
 const jwt = require('../utils/jwt');
 require('dotenv').config();
 
@@ -8,15 +9,18 @@ require('dotenv').config();
 module.exports = {
     getAllPosts: function (req,res,next) {
         Post.findAll({
-            attributes: [ 'titre', 'contenu', 'date', 'idUser'],
+            // attributes: [ 'titre', 'contenu', 'date', 'idUser'],
             order: [['date', 'DESC']],
-            // include: [{model: User}]
+            // include: {
+            //     model: 'User',
+            //     required: true
+            // }
         })
         .then( retour => {
             return res.status(200).json(retour);
         })
         .catch( error => {
-            return res.status(400).json({error : error});
+            return res.status(400).json({error : `voici l'erreur du find : ${error}`});
         })
     },
     getOnePost: function (req,res,next) {
@@ -37,9 +41,22 @@ module.exports = {
         })
         .then( retour => {
             if (retour == 1) {
+                Comment.destroy({
+                    where: { idPost: req.params.id }
+                })
+                .then( retour => {
+                    if (retour == 1) {
+                        return res.status(200).json({message : "Commentaire supprimé!"});
+                    } else {
+                        return res.status(400).json({error : "Problème lors de la suppression des commentaires"});
+                    }
+                })
+                .catch( error => {
+                    return res.status(400).json({error : error});
+                })
                 return res.status(200).json({message : "Post supprimé!"});
             } else {
-                return res.status(400).json({error : "Problème lors de la suppression"});
+                return res.status(400).json({error : "Problème lors de la suppressiondu post"});
             }
         })
         .catch( error => {
@@ -68,7 +85,6 @@ module.exports = {
         .catch((error) => {
             return res.status(400).json({error : `erreur du create : ${error}`});
         });
-        
     },
     modifyPost: function (req,res,next) {
         
