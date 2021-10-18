@@ -1,12 +1,17 @@
 const db = require("../models");
 const Post = db.Post;
+const User = db.User;
 const jwt = require('../utils/jwt');
 require('dotenv').config();
 
 
 module.exports = {
     getAllPosts: function (req,res,next) {
-        Post.findAll()
+        Post.findAll({
+            attributes: [ 'titre', 'contenu', 'date', 'idUser'],
+            order: [['date', 'DESC']],
+            // include: [{model: User}]
+        })
         .then( retour => {
             return res.status(200).json(retour);
         })

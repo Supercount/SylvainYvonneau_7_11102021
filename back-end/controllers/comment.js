@@ -6,6 +6,13 @@ require('dotenv').config();
 
 module.exports = {
     getComments: function(req,res,next) {
+        Comment.findAll()
+        .then( retour => {
+            return res.status(200).json(retour);
+        })
+        .catch( error => {
+            return res.status(400).json({error : error});
+        })
 
     },
     createComments: function(req,res,next) {
