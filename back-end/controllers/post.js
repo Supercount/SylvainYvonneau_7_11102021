@@ -11,10 +11,10 @@ module.exports = {
         Post.findAll({
             // attributes: [ 'titre', 'contenu', 'date', 'idUser'],
             order: [['date', 'DESC']],
-            // include: {
-            //     model: 'User',
-            //     required: true
-            // }
+            // include: 'user'
+            // include: [{
+            //     all: true
+            // }]
         })
         .then( retour => {
             return res.status(200).json(retour);
@@ -36,31 +36,37 @@ module.exports = {
         
     },
     deletePost: function (req,res,next) {
-        Post.destroy({
-            where: { id: req.params.id }
-        })
-        .then( retour => {
-            if (retour == 1) {
-                Comment.destroy({
-                    where: { idPost: req.params.id }
-                })
-                .then( retour => {
-                    if (retour == 1) {
-                        return res.status(200).json({message : "Post et commentaires supprimés!"});
-                    } else {
-                        return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
-                    }
-                })
-                .catch( error => {
-                    return res.status(400).json({error : error});
-                })
-            } else {
-                return res.status(400).json({error : "Problème lors de la suppression du post"});
-            }
-        })
-        .catch( error => {
-            return res.status(400).json({error : error});
-        })
+        let postId = req.params.id;
+        let isAutorised = jwt.checkautorisation(req, postId);
+        if (isAutorised) {
+            Post.destroy({
+                where: { id: postId }
+            })
+            .then( retour => {
+                if (retour == 1) {
+                    Comment.destroy({
+                        where: { idPost: postId }
+                    })
+                    .then( retour => {
+                        if (retour == 1) {
+                            return res.status(200).json({message : "Post et commentaires supprimés!"});
+                        } else {
+                            return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
+                        }
+                    })
+                    .catch( error => {
+                        return res.status(400).json({error : error});
+                    })
+                } else {
+                    return res.status(400).json({error : "Problème lors de la suppression du post"});
+                }
+            })
+            .catch( error => {
+                return res.status(400).json({error : error});
+            })
+        } else {
+            return res.status(403).json({error : "Vous n'êtes pas autorisé à supprimer ce post!"})
+        }
     },
     createPost: function (req,res,next) {
         let newImage = (req.file != null) ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null;

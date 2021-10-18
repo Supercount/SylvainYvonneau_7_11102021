@@ -1,5 +1,6 @@
 const db = require("../models");
 const Comment = db.Comment;
+const User = db.User;
 const jwt = require('../utils/jwt');
 require('dotenv').config();
 
@@ -9,7 +10,8 @@ module.exports = {
         Comment.findAll({
             // attributes: [ 'contenu', 'date', 'idUser'],
             order: [['date', 'DESC']],
-            where: { idPost: req.params.idpost }
+            where: { idPost: req.params.idpost },
+            // include: [User]
             // include: [{
             //     model: 'User',
             //     required: true

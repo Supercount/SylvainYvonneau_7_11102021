@@ -26,4 +26,13 @@ module.exports = {
     }
     return admin;
   },
+  checkautorisation: function(req, id) {
+    let checkId = module.exports.recupereId(req);
+    let admin = module.exports.checkAdmin(req);
+    if (!admin) {
+      console.log(checkId == id);
+      return (checkId == id);
+    }
+    else return false;
+  }
 }
