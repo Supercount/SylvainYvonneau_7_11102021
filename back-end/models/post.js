@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   var Post = sequelize.define(
     'Post', {
-      idUser: DataTypes.INTEGER,
       titre: DataTypes.STRING,
       contenu: DataTypes.STRING,
+      idUser: DataTypes.INTEGER,
       imageURL: DataTypes.STRING,
       date: DataTypes.DATE
     }, {
@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: {
               allowNull: false
             }
-          })
+          });
+          models.Post.hasMany(models.Comment);
         }
       }
     });

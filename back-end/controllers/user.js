@@ -1,7 +1,7 @@
 const db = require("../models");
 const User = db.User;
 const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt = require('../utils/jwt');
 require('dotenv').config();
 
 
@@ -10,6 +10,8 @@ module.exports = {
         let newMail = req.body.email;
         let newName = req.body.username;
         let newPass = req.body.password;
+        let admin = (req.body.isAdmin) ? 1 : 0
+        console.log(`${newMail} ${newName} ${newPass} ${admin}`)
         if ( newMail == null || newName == null || newPass == null ) {
             return res.status(400).json({error: "Paramètres manquants"});
         }
@@ -25,7 +27,7 @@ module.exports = {
                         email: newMail,
                         username: newName,
                         password: hash,
-                        isAdmin: 0
+                        isAdmin: admin
                     })
                     .then( (newUser)=> {
                         return res.status(201).json({userId:newUser.id,message:"utilisateur créé"})
@@ -58,7 +60,7 @@ module.exports = {
                 .then( isValid => {
                     if (isValid) {
                         return res.status(200).json({
-                            token : jwt.sign({userId : userFound.id, isAdmin : userFound.isAdmin}, process.env.SECRET_TOKEN, {expiresIn : "1d"})
+                            token : jwt.genererToken(userFound)
                         });
                     } else {
                         return res.status(401).json({error : "Mot de passe incorrect!"});
@@ -74,7 +76,9 @@ module.exports = {
         });
     },
     getUsers: function(req,res,next) {
-        User.findAll()
+        User.findAll({
+            attributes: ['id', 'username', 'email', 'isAdmin']
+        })
         .then( retour => {
             return res.status(200).json(retour);
         })
@@ -84,6 +88,7 @@ module.exports = {
     },
     getUser: function(req,res,next) {
         User.findOne({
+            attributes: ['id', 'username', 'email', 'isAdmin'],
             where: { id: req.params.id }
         })
         .then( retour => {
@@ -98,10 +103,14 @@ module.exports = {
             where: { id: req.params.id }
         })
         .then( retour => {
-            return res.status(200).json(retour);
+            if (retour == 1) {
+                return res.status(200).json({message : "Utilisateur supprimé!"});
+            } else {
+                return res.status(400).json({error : "Problème lors de la suppression"});
+            }
         })
         .catch( error => {
-            return res.status(400).json({error : "problème de récup"});
+            return res.status(400).json({error : error});
         })
     }
 }
