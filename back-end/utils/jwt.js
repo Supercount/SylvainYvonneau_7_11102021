@@ -30,7 +30,8 @@ module.exports = {
     let checkId = module.exports.recupereId(req);
     let admin = module.exports.checkAdmin(req);
     if (!admin) {
-      console.log(checkId == id);
+      console.log(checkId);
+      console.log(id);
       return (checkId == id);
     }
     else return false;

@@ -23,7 +23,7 @@ module.exports = {
         .catch( error => {
             return res.status(400).json({error : error});
         })
-
+        
     },
     createComments: function(req,res,next) {
         let newContent = req.body.contenu;
@@ -44,14 +44,28 @@ module.exports = {
         });
     },
     deleteComments: function(req,res,next) {
-        Comment.destroy({
+        Comment.findOne({
+            attributes: ['idUser'],
             where: { id: req.params.idcom }
         })
         .then( retour => {
-            if (retour == 1) {
-                return res.status(200).json({message : "Commentaire supprimé!"});
+            let isAutorised = jwt.checkautorisation(req, retour.idUser);
+            if (isAutorised) {
+                Comment.destroy({
+                    where: { id: req.params.idcom }
+                })
+                .then( retour => {
+                    if (retour == 1) {
+                        return res.status(200).json({message : "Commentaire supprimé!"});
+                    } else {
+                        return res.status(400).json({error : "Problème lors de la suppression"});
+                    }
+                })
+                .catch( error => {
+                    return res.status(400).json({error : error});
+                })
             } else {
-                return res.status(400).json({error : "Problème lors de la suppression"});
+                return res.status(403).json({error : "Vous n'êtes pas autorisé à supprimer ce commentaire!"})
             }
         })
         .catch( error => {
@@ -59,19 +73,36 @@ module.exports = {
         })
     },
     modifyComment: function(req,res,next) {
-        const newComment =  {
-            contenu : req.body.contenu
-        };
-        Comment.update(
-            {
-            contenu: newComment.contenu
-        },
-            {where: { id: req.params.idcom }}
-        )
-        .then(()=> {
-            return res.status(201).json({message:"Commentaire modifié"})
+        Comment.findOne({
+            attributes: ['idUser'],
+            where: { id: req.params.idcom }
         })
-        .catch((error) => {
-            return res.status(400).json({error : `erreur de l'update : ${error}`});
-        })}
+        .then( retour => {
+            let isAutorised = jwt.checkautorisation(req, retour.idUser);
+            if (isAutorised) {
+                
+                const newComment =  {
+                    contenu : req.body.contenu
+                };
+                Comment.update(
+                    {
+                        contenu: newComment.contenu
+                    },
+                    {where: { id: req.params.idcom }}
+                    )
+                    .then(()=> {
+                        return res.status(201).json({message:"Commentaire modifié"})
+                    })
+                    .catch((error) => {
+                        return res.status(400).json({error : `erreur de l'update : ${error}`});
+                    }
+                )
+            } else {
+                return res.status(403).json({error : "Vous n'êtes pas autorisé à modifier ce commentaire!"})
+            }
+        })
+        .catch( error => {
+            return res.status(400).json({error : error});
+        })
+    }
 }
