@@ -58,4 +58,20 @@ module.exports = {
             return res.status(400).json({error : error});
         })
     },
+    modifyComment: function(req,res,next) {
+        const newComment =  {
+            contenu : req.body.contenu
+        };
+        Comment.update(
+            {
+            contenu: newComment.contenu
+        },
+            {where: { id: req.params.idcom }}
+        )
+        .then(()=> {
+            return res.status(201).json({message:"Commentaire modifié"})
+        })
+        .catch((error) => {
+            return res.status(400).json({error : `erreur de l'update : ${error}`});
+        })}
 }

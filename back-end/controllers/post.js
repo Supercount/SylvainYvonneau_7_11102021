@@ -39,6 +39,16 @@ module.exports = {
         let postId = req.params.id;
         let isAutorised = jwt.checkautorisation(req, postId);
         if (isAutorised) {
+            Post.findOne({
+                where: { id: postId }
+            })
+            .then( post => {
+                const imagePost = post.imageUrl.split('/images/')[1];
+                fs.unlink(`images/${imagePost}`,() => {});
+            })
+            .catch(error => {
+                return res.status(404).json({error : error});
+            });
             Post.destroy({
                 where: { id: postId }
             })
@@ -92,6 +102,46 @@ module.exports = {
         });
     },
     modifyPost: function (req,res,next) {
-        
+        let postId = req.params.id;
+        let isAutorised = jwt.checkautorisation(req, postId);
+        if (isAutorised) {
+            if (req.file != null) {
+                Post.findOne({
+                    where: { id: req.params.id }
+                })
+                .then( post => {
+                    const imagePost = post.imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${imagePost}`,() => {});
+                })
+                .catch(error => {
+                    return res.status(404).json({error : error});
+                });
+            }
+            const newPost = (req.file != null) ? {
+                titre : JSON.parse(req.body.post).titre,
+                contenu : JSON.parse(req.body.post).contenu,
+                imageURL : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+            } : {
+                titre : req.body.titre,
+                contenu : req.body.contenu,
+                imageURL : req.body.imageURL
+            };
+            Post.update(
+                {
+                    titre: newPost.titre,
+                    contenu: newPost.contenu,
+                    imageURL: newPost.imageURL
+                },
+                {where: { id: req.params.id }}
+                )
+                .then(()=> {
+                    return res.status(201).json({message:"Post modifié"})
+                })
+                .catch((error) => {
+                    return res.status(400).json({error : `erreur de l'update : ${error}`});
+                })
+            } else {
+                return res.status(403).json({error : "Vous n'êtes pas autorisé à supprimer ce post!"})
+            }
+        }
     }
-}
