@@ -1,0 +1,19 @@
+.banniere {
+    max-height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.banniere--logo {
+    max-height: 120px;
+}
+
+.banniere--menu {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+}

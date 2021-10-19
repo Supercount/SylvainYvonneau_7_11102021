@@ -1,25 +1,18 @@
-import logo from '../logo.svg';
+import { useState, useEffect } from 'react'
+import Banner from './Banner';
+import Footer from './Footer';
 import '../styles/App.css';
 
 function App() {
+  const [login, updateLogin] = useState(true);
+  const [form, updateForm] = useState("Connexion");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload at will.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Banner login={login} updateLogin={updateLogin} form={form} updateForm={updateForm}/>
+      <Footer/>
     </div>
-  );
-}
-
-export default App;
+    );
+  }
+  
+  export default App;
+  
