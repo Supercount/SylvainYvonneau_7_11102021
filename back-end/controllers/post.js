@@ -9,15 +9,35 @@ require('dotenv').config();
 module.exports = {
     getAllPosts: function (req,res,next) {
         Post.findAll({
-            // attributes: [ 'titre', 'contenu', 'date', 'idUser'],
-            order: [['date', 'DESC']],
-            // include: 'user'
-            // include: [{
-            //     all: true
-            // }]
+            attributes: [ 'titre', 'contenu', 'date', 'idUser'],
+            order: [['date', 'DESC']]
         })
         .then( retour => {
-            return res.status(200).json(retour);
+            let taille = retour.length;
+            let compteur =0;
+            let listePosts = [];
+            retour.forEach(post => {
+                User.findOne({
+                    attributes: ['username'],
+                    where: {id: post.idUser}
+                })
+                .then((user) => {
+                    let valeur = {
+                        titre: post.titre,
+                        contenu: post.contenu,
+                        date: post.date,
+                        username: user.username
+                    };
+                    listePosts.push(valeur);
+                    compteur++;
+                    if (compteur == taille) {
+                        return res.status(200).json(listePosts);
+                    }
+                })
+                .catch( error => {
+                    return res.status(400).json({error : error});
+                })
+            });
         })
         .catch( error => {
             return res.status(400).json({error : `voici l'erreur du find : ${error}`});
@@ -27,8 +47,23 @@ module.exports = {
         Post.findOne({
             where: { id: req.params.id }
         })
-        .then( retour => {
-            return res.status(200).json(retour);
+        .then( post => {
+                User.findOne({
+                    attributes: ['username'],
+                    where: {id: post.idUser}
+                })
+                .then((user) => {
+                    let valeur = {
+                        titre: post.titre,
+                        contenu: post.contenu,
+                        date: post.date,
+                        username: user.username
+                    };
+                    return res.status(200).json(valeur);
+                })
+                .catch( error => {
+                    return res.status(400).json({error : error});
+                })
         })
         .catch( error => {
             return res.status(400).json({error : error});
@@ -36,6 +71,7 @@ module.exports = {
         
     },
     deletePost: function (req,res,next) {
+        let postId = req.params.id;
         Post.findOne({
             attributes: ['idUser'],
             where: { id: req.params.id }

@@ -8,17 +8,36 @@ require('dotenv').config();
 module.exports = {
     getComments: function(req,res,next) {
         Comment.findAll({
-            // attributes: [ 'contenu', 'date', 'idUser'],
+            attributes: [ 'contenu', 'date', 'idUser'],
             order: [['date', 'DESC']],
-            where: { idPost: req.params.idpost },
-            // include: [User]
-            // include: [{
-            //     model: 'User',
-            //     required: true
-            // }]
+            where: { idPost: req.params.idpost }
         })
         .then( retour => {
-            return res.status(200).json(retour);
+            let taille = retour.length;
+            let compteur =0;
+            let listeComments = [];
+            retour.forEach(post => {
+                User.findOne({
+                    attributes: ['username'],
+                    where: {id: post.idUser}
+                })
+                .then((user) => {
+                    let valeur = {
+                        titre: post.titre,
+                        contenu: post.contenu,
+                        date: post.date,
+                        username: user.username
+                    };
+                    listeComments.push(valeur);
+                    compteur++;
+                    if (compteur == taille) {
+                        return res.status(200).json(listeComments);
+                    }
+                })
+                .catch( error => {
+                    return res.status(400).json({error : error});
+                })
+            });
         })
         .catch( error => {
             return res.status(400).json({error : error});
