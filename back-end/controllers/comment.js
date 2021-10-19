@@ -16,16 +16,15 @@ module.exports = {
             let taille = retour.length;
             let compteur =0;
             let listeComments = [];
-            retour.forEach(post => {
+            retour.forEach(comment => {
                 User.findOne({
                     attributes: ['username'],
-                    where: {id: post.idUser}
+                    where: {id: comment.idUser}
                 })
                 .then((user) => {
                     let valeur = {
-                        titre: post.titre,
-                        contenu: post.contenu,
-                        date: post.date,
+                        contenu: comment.contenu,
+                        date: comment.date,
                         username: user.username
                     };
                     listeComments.push(valeur);
