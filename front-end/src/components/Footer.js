@@ -3,7 +3,7 @@ import '../styles/Footer.css'
 function Footer() {
 	return (
 		<footer className="foot">
-            Grouporama - Service de communication interne
+            Groupomania - Service de communication interne
 		</footer>
 	)
 }
