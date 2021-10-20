@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
 
-function Menu ({login, updateLogin, form, updateForm}) {
-    return (login ? 
+function Menu ({logged, updateLogin, form, updateForm}) {
+    return (logged ? 
         <ul className="banniere--menu">
           <li onClick={() => updateLogin(false)}>Deconnexion</li>
         </ul>

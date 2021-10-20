@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Banner from './Banner';
+import Main from './Main';
 import Footer from './Footer';
 import '../styles/App.css';
 
 function App() {
-  const [login, updateLogin] = useState(true);
-  const [form, updateForm] = useState("Connexion");
+  const [logged, updateLogin] = useState(true);
+  const [contenu, updateContenu] = useState("Connexion");
   return (
     <div className="App">
-      <Banner login={login} updateLogin={updateLogin} form={form} updateForm={updateForm}/>
+      <Banner logged={logged} updateLogin={updateLogin} form={contenu} updateForm={updateContenu}/>
+      <Main logged={logged} updateLogin={updateLogin} form={contenu} updateForm={updateContenu} />
       <Footer/>
     </div>
     );
