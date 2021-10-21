@@ -8,8 +8,8 @@ require('dotenv').config();
 module.exports = {
     getComments: function(req,res,next) {
         Comment.findAll({
-            attributes: [ 'contenu', 'date', 'idUser'],
-            order: [['date', 'DESC']],
+            attributes: [ 'contenu', 'date', 'idUser', 'id'],
+            order: [['date', 'ASC']],
             where: { idPost: req.params.idpost }
         })
         .then( retour => {
@@ -23,6 +23,7 @@ module.exports = {
                 })
                 .then((user) => {
                     let valeur = {
+                        id: comment.id,
                         contenu: comment.contenu,
                         date: comment.date,
                         username: user.username

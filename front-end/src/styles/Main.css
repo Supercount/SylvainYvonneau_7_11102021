@@ -1,0 +1,8 @@
+.section--choix {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    max-width: 50%;
+    justify-content: space-around;
+    margin: auto;
+}

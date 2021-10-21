@@ -1,72 +1,45 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "./Post";
+import Comments from './Comments';
 
-const baseURL = "http://localhost:3000/api/post/";
 
-function Users () {
-    // const [data, setData] = useState(null);
+function Messages ({idUsed, setId}) {
     const [post, setPost] = useState(null);
-
+    // let postURL = `http://localhost:3000/api/post/${id}`;
+    
     useEffect(() => {
-        axios.get(baseURL).then((response) => {
-        setPost(response.data);
-        });
-        }, []
+        if (idUsed === 0) {
+            let baseURL = `http://localhost:3000/api/post/`;
+            console.log(baseURL);
+            axios.get(baseURL).then((response) => {
+                setPost(response.data);
+            });
+        } else {
+            let postURL = `http://localhost:3000/api/post/${idUsed}`;
+            console.log(postURL);
+            axios.get(postURL).then((response) => {
+                setPost(response.data);
+            });
+        }
+        }, [idUsed]
     );
 
     if (!post) return null;
     
-    return (
-        // <div>
-        //     <p>identifiant : {user[1].id}</p>
-        //     <p>nom : {user[1].username}</p>
-        //     <p>email : {user[1].email}</p>
-        // </div>
-        <div>
-            {post.map(({titre, contenu, username, date}) => (
-                <div>
-                    <Post titre={titre} contenu={contenu} username={username} date={date} />
+    return ( (idUsed === 0) ?
+        <ul>
+            {post.map(({titre, contenu, username, date, id}) => (
+                <div key={id} onClick={() => setId(id)}>
+                    <Post titre={titre} contenu={contenu} username={username} date={date}/>
                 </div>
             ))}
+        </ul> :
+        <div key={idUsed}>
+            <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date}/>
+            <Comments idUsed={idUsed} setId={setId}/>
         </div>
     );
-    // axios.get("http://localhost:3000/api/auth/")
-    //     .then(res => {
-    //         console.log(".then", res.data);
-    //         this.datasFetched = true;
-    //         // return res.data;
-    //         this.users = res.data;
-    //         // this.$emit("myEvent");
-    //     })
-    //     .catch(error => console.log("trouble while fetching datas: ", error));      
-    
-    // return this.users;
-
-
-    // useEffect(() => {
-    //     fetch("http://localhost:3000/api/auth/")
-    //     .then (res => res.json())
-    //     .then (data => {
-    //         setData(data);
-    //     })
-    //     .catch(() => {
-    //         return (
-    //             <div className="users">
-    //             fetch raté
-    //             </div>
-    //             )
-    //     });
-    // },[]);
-    // console.log(data)
-    // return (
-    //     <div>
-    //         {JSON.stringify(data)}
-    //         {/* {JSON.stringify(data).map(({id, username, email}) => {
-    //             <Person id={id} username={username} email={email} />
-    //         })} */}
-    //     </div>
-    // );
 }        
 
-export default Users;
+export default Messages;

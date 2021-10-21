@@ -1,7 +1,20 @@
+import { useState } from "react";
 
 
 function Formulaire ({form, updateForm}) {
-    
+    const [post, setPost] = useState(null);
+    let loginURL = "localhost:3000/api/auth/login";
+    let signupURL = "localhost:3000/api/auth/signup";
+
+    function login(mail,password) {
+        axios.post(loginURL, {
+            email: mail,
+            password: password
+        })
+        .then((response) => {
+            setPost(response.data);
+        });
+    }
     
     return ( (form === "Connexion") ? 
         <form>

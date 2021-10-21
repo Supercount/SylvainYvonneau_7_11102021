@@ -9,8 +9,8 @@ require('dotenv').config();
 module.exports = {
     getAllPosts: function (req,res,next) {
         Post.findAll({
-            attributes: [ 'titre', 'contenu', 'date', 'idUser'],
-            order: [['date', 'DESC']]
+            attributes: [ 'id', 'titre', 'contenu', 'date', 'idUser'],
+            order: [['date', 'ASC']]
         })
         .then( retour => {
             let taille = retour.length;
@@ -23,6 +23,7 @@ module.exports = {
                 })
                 .then((user) => {
                     let valeur = {
+                        id: post.id,
                         titre: post.titre,
                         contenu: post.contenu,
                         date: post.date,

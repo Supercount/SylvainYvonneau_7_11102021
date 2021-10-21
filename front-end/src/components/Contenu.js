@@ -1,13 +1,14 @@
+import { useState } from "react";
 import Users from "./Users"
 import Messages from "./Messages"
 
-function Contenu ({contenu, updateContenu}) {
+function Contenu ({contenu, updateContenu, idUsed, setId}) {
     return (contenu === "Utilisateurs") ? 
         <div>
-            <Users />
+            <Users idUsed={idUsed} setId={setId}/>
         </div> : 
         <div>
-            <Messages />
+            <Messages idUsed={idUsed} setId={setId}/>
         </div>
 
 }
