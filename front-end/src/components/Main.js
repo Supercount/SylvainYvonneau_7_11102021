@@ -8,7 +8,7 @@ function Main ({logged, updateLogin, form, updateForm}) {
         <main className="contenu">
             <ul>
                 <li onClick={() => updateContenu("Utilisateurs")}>Utilisateurs</li>
-                <li onClick={() => updateContenu("Messages")}>Message</li>
+                <li onClick={() => updateContenu("Messages")}>Messages</li>
             </ul>
             <Contenu contenu={contenu} updateContenu={updateContenu} />
         </main> :  

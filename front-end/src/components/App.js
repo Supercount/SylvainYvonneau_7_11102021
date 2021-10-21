@@ -6,7 +6,7 @@ import '../styles/App.css';
 
 function App() {
   const [logged, updateLogin] = useState(true);
-  const [contenu, updateContenu] = useState("Connexion");
+  const [contenu, updateContenu] = useState("Test");
   return (
     <div className="App">
       <Banner logged={logged} updateLogin={updateLogin} form={contenu} updateForm={updateContenu}/>

@@ -14,7 +14,7 @@ function Formulaire ({form, updateForm}) {
                 <input type="text" />
             </label>
             <input type="submit" value="Envoyer" />
-        </form> :  
+        </form> :  (form === "Inscription") ?
         <form>
             <label>
                 email :
@@ -29,7 +29,7 @@ function Formulaire ({form, updateForm}) {
                 <input type="text"/>
             </label>
             <input type="submit" value="Envoyer" />
-        </form>
+        </form> : null
     )
 }
 

@@ -1,13 +1,14 @@
 .banniere {
-    max-height: 100px;
+    max-height: 120px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    background-color: #ffd7d7;
 }
 
 .banniere--logo {
-    max-height: 120px;
+    max-height: 80px;
 }
 
 .banniere--menu {
