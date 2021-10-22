@@ -5,7 +5,7 @@ import Footer from './Footer';
 import '../styles/App.css';
 
 function App() {
-    const [logged, updateLogin] = useState(true);
+    const [logged, updateLogin] = useState(false);
     const [contenu, updateContenu] = useState("Connexion");
     return (
         <div className="App">

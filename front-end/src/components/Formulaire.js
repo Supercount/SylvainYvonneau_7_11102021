@@ -15,9 +15,8 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
             localStorage.setItem("token",response.data.token);
             updateLogin(true);
         })
-        .catch((error) => {
-            console.log("Connexion refusée");
-            alert(error);
+        .catch(() => {
+            alert("Connexion refusée");
         });
     }
 
@@ -26,7 +25,6 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
         axios.post(signupURL, user)
         .then((response) => {
             alert(`${response.data.message}. Vous pouvez vous identifier`)
-            console.log(response);
         });
     }
 

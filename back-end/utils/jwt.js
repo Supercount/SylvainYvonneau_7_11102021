@@ -21,19 +21,19 @@ module.exports = {
   checkAdmin: function(req) {
     let admin = false;
     const token = module.exports.parseToken(req);
+    console.log(token)
     if(token != null) {
-          isAdmin = token.isAdmin;
+          admin = token.isAdmin;
     }
     return admin;
   },
   checkautorisation: function(req, id) {
     let checkId = module.exports.recupereId(req);
     let admin = module.exports.checkAdmin(req);
+    console.log(admin);
     if (!admin) {
-      console.log(checkId);
-      console.log(id);
       return (checkId == id);
     }
-    else return false;
+    else return true;
   }
 }

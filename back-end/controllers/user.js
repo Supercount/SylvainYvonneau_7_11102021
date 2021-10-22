@@ -99,18 +99,24 @@ module.exports = {
         })
     },
     deleteUser: function(req,res,next) {
-        User.destroy({
-            where: { id: req.params.id }
-        })
-        .then( retour => {
-            if (retour == 1) {
-                return res.status(200).json({message : "Utilisateur supprimé!"});
-            } else {
-                return res.status(400).json({error : "Problème lors de la suppression"});
-            }
-        })
-        .catch( error => {
-            return res.status(400).json({error : error});
-        })
+        let idToDestroy = req.params.id;
+        let isAutorised = jwt.checkautorisation(req, idToDestroy);
+        if (isAutorised) {
+            User.destroy({
+                where: { id: idToDestroy }
+            })
+            .then( retour => {
+                if (retour == 1) {
+                    return res.status(200).json({message : "Utilisateur supprimé!"});
+                } else {
+                    return res.status(400).json({error : "Problème lors de la suppression"});
+                }
+            })
+            .catch( error => {
+                return res.status(400).json({error : error});
+            })
+        } else {
+            return res.status(403).json({error : "Vous n'êtes pas autorisé à supprimer cet utilisateur!"})
+        }
     }
 }

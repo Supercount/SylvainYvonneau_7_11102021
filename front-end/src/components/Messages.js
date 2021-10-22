@@ -34,7 +34,8 @@ function Messages ({idUsed, setId}) {
                 </div>
             ))}
         </ul> :
-        <div key={idUsed}>
+        <div>
+            <p onClick={() => setId(0)}> Retour </p>
             <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date}/>
             <Comments idUsed={idUsed} setId={setId}/>
         </div>

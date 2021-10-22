@@ -1,7 +1,7 @@
 
 function Person({ id, username, email }) {
 	return (
-		<li className='lmj-plant-item'>
+		<li className='user'>
 			<span>{id}</span>
 			{username}
 			<span>{email}</span>
