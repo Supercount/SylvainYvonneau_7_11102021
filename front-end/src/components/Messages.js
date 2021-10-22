@@ -9,13 +9,13 @@ function Messages ({idUsed, setId}) {
     
     useEffect(() => {
         if (idUsed === 0) {
-            let baseURL = `http://localhost:3000/api/post/`;
+            let baseURL = `http://localhost:3001/api/post/`;
             axios.get(baseURL)
             .then((response) => {
                 setPost(response.data);
             });
         } else {
-            let postURL = `http://localhost:3000/api/post/${idUsed}`;
+            let postURL = `http://localhost:3001/api/post/${idUsed}`;
             axios.get(postURL)
             .then((response) => {
                 setPost(response.data);

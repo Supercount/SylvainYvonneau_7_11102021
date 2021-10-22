@@ -1,68 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-
 
 function Formulaire ({logged, updateLogin, form, updateForm}) {
     const [name, updateName] = useState("");
     const [mail, updateMail] = useState("");
     const [password, updatePass] = useState("");
-    let loginURL = "http://localhost:3000/api/auth/login";
-    let signupURL = "http://localhost:3000/api/auth/signup";
+    let loginURL = "http://localhost:3001/api/auth/login";
+    let signupURL = "http://localhost:3001/api/auth/signup";
 
     function login() {
-        console.log(password);
-        console.log(mail);
         const user = {email: mail, password: password}
         axios.post(loginURL, user)
-        // fetch(loginURL, {
-        //     method: "POST",
-        //     headers: { 
-        //         'Accept': 'application/json', 
-        //         'Content-Type': 'application/json' 
-        //     },
-        //     body: JSON.stringify(user)
-        // })
         .then((response) => {
             localStorage.setItem("token",response.data.token);
             updateLogin(true);
         })
         .catch((error) => {
-            console.log(error);
+            console.log("Connexion refusée");
+            alert(error);
         });
     }
 
     function signup() {
         const user = {email: mail, username: name, password: password}
         axios.post(signupURL, user)
-        // fetch(loginURL, {
-        //     method: "POST",
-        //     headers: { 
-        //         'Accept': 'application/json', 
-        //         'Content-Type': 'application/json' 
-        //     },
-        //     body: JSON.stringify(user)
-        // })
         .then((response) => {
-            setToken(response.token);
+            alert(`${response.data.message}. Vous pouvez vous identifier`)
             console.log(response);
         });
     }
-
-        // let bouton = document.getElementById("valid");
-
-        // useEffect(() => {
-        //     let postURL = `http://localhost:3000/api/post/${idUsed}/comment`;
-        //     axios.get(postURL).then((response) => {
-        //         setComment(response.data);
-        //     });
-        // }, [idUsed]
-        // );
-
-        // if (form === "Connexion") {
-        //     bouton.addEventListener("click",login);
-        // } else {
-        //     bouton.addEventListener("click",signup);
-        // }
 
     return ( (form === "Connexion") ? 
         <form>

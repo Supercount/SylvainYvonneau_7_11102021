@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Person from "./Person";
 
-const baseURL = "http://localhost:3000/api/auth/";
+const baseURL = "http://localhost:3001/api/auth/";
 
 function Users ({idUsed, setId}) {
     const [user, setUser] = useState(null);

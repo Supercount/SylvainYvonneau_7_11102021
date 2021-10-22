@@ -7,7 +7,7 @@ function Comments ({idUsed, setId}) {
     const [comment, setComment] = useState(null);
     
     useEffect(() => {
-            let postURL = `http://localhost:3000/api/post/${idUsed}/comment`;
+            let postURL = `http://localhost:3001/api/post/${idUsed}/comment`;
             axios.get(postURL).then((response) => {
                 setComment(response.data);
             });
