@@ -4,7 +4,7 @@ import Person from "./Person";
 
 const baseURL = "http://localhost:3000/api/auth/";
 
-function Users ({id, setId}) {
+function Users ({idUsed, setId}) {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -16,14 +16,14 @@ function Users ({id, setId}) {
 
     if (!user) return null;
     
-    return (
+    return ( (idUsed === 0) ?
         <div>
             {user.map(({id, username, email}) => (
-                <div key={id}>
+                <div key={id} onClick={() => setId(id)}>
                     <Person id={id} username={username} email={email} />
                 </div>
             ))}
-        </div>
+        </div> : null
     );
 }        
 

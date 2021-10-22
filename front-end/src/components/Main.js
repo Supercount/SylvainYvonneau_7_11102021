@@ -19,7 +19,7 @@ function Main ({logged, updateLogin, form, updateForm}) {
             <Contenu contenu={contenu} updateContenu={updateContenu} idUsed={idUsed} setId={setId}/>
         </main> :  
         <main className="contenu">
-            <Formulaire form={form} updateForm={updateForm}/>
+            <Formulaire logged={logged} updateLogin={updateLogin} form={form} updateForm={updateForm}/>
         </main>
     )
 }

@@ -5,15 +5,13 @@ import Post from "./Post";
 
 function Comments ({idUsed, setId}) {
     const [comment, setComment] = useState(null);
-    // let postURL = `http://localhost:3000/api/post/${id}`;
     
     useEffect(() => {
             let postURL = `http://localhost:3000/api/post/${idUsed}/comment`;
-            console.log(postURL);
             axios.get(postURL).then((response) => {
                 setComment(response.data);
             });
-        }, []
+        }, [idUsed]
     );
 
     if (!comment) return null;
