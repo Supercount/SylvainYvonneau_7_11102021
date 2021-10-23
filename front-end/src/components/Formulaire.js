@@ -25,7 +25,8 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
         axios.post(signupURL, user)
         .then((response) => {
             alert(`${response.data.message}. Vous pouvez vous identifier`)
-        });
+        })
+        .catch((error) => alert(`Erreur lors de l'inscription : ${error}`));
     }
 
     return ( (form === "Connexion") ? 

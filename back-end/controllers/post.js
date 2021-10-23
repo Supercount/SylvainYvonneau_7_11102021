@@ -63,11 +63,11 @@ module.exports = {
                     return res.status(200).json(valeur);
                 })
                 .catch( error => {
-                    return res.status(400).json({error : error});
+                    return res.status(400).json({error : "erreur find user " + error});
                 })
         })
         .catch( error => {
-            return res.status(400).json({error : error});
+            return res.status(400).json({error : "erreur find post " + error});
         })
         
     },
@@ -75,7 +75,7 @@ module.exports = {
         let postId = req.params.id;
         Post.findOne({
             attributes: ['idUser'],
-            where: { id: req.params.id }
+            where: { id: postId }
         })
         .then( retour => {
             let isAutorised = jwt.checkautorisation(req, retour.idUser);
@@ -83,29 +83,39 @@ module.exports = {
                 Post.findOne({
                     where: { id: postId }
                 })
-                .then( post => {
-                    const imagePost = post.imageUrl.split('/images/')[1];
-                    fs.unlink(`images/${imagePost}`,() => {});
+                .then( (post) => {
+                    // const imagePost = post.imageUrl.split('/images/')[1];
+                    // fs.unlink(`images/${imagePost}`,() => {});
                 })
-                .catch(error => {
-                    return res.status(404).json({error : error});
+                .catch((error) => {
+                    return res.status(404).json({error : `créateur non trouvé : ${error}`});
                 });
                 Post.destroy({
                     where: { id: postId }
                 })
                 .then( retour => {
                     if (retour == 1) {
-                        Comment.destroy({
+                        Comment.findAll({
                             where: { idPost: postId }
                         })
-                        .then( retour => {
-                            if (retour == 1) {
-                                return res.status(200).json({message : "Post et commentaires supprimés!"});
-                            } else {
-                                return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
+                        .then((list) => {
+                            if (list.length !== 0) {
+                                Comment.destroy({
+                                    where: { idPost: postId }
+                                })
+                                .then( retour => {
+                                    if (retour == 1) {
+                                        return res.status(200).json({message : "Post et commentaires supprimés!"});
+                                    } else {
+                                        return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
+                                    }
+                                })
+                                .catch( error => {
+                                    return res.status(400).json({error : error});
+                                })
                             }
                         })
-                        .catch( error => {
+                        .catch(error => {
                             return res.status(400).json({error : error});
                         })
                     } else {

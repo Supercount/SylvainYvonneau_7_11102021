@@ -30,7 +30,7 @@ module.exports = {
                         isAdmin: admin
                     })
                     .then( (newUser)=> {
-                        return res.status(201).json({userId:newUser.id,message:"utilisateur créé"})
+                        return res.status(201).json({userId:newUser.id,message:"Utilisateur créé"})
                     })
                     .catch((error) => {
                         return res.status(400).json({error : error});

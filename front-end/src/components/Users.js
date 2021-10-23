@@ -39,7 +39,6 @@ function Users ({logged, updateLogin, idUsed, setId}) {
     function userDelete() {
         let baseURL = `http://localhost:3001/api/auth/${idUsed}`;
         let token = localStorage.getItem("token");
-        console.log(token);
         axios.delete(baseURL, {
             headers: {
               Authorization: 'Bearer ' + token
