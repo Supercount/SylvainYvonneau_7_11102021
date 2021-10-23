@@ -44,10 +44,20 @@ function Comments ({idUsed, setId}) {
             });
         }, [idUsed]
     );
-
-    if (!comment) return null;
     
-    return (
+    return ( (!comment) ?
+        (
+            <div>
+                <form>
+                    <label>
+                        Répondre :
+                        <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
+                    </label>
+                    <input type="button" onClick={postComment} value="Répondre" />
+                </form>
+            </div>
+        )
+        : (
         <div>
             <ul>
                 {comment.map(({contenu, username, date, id}) => (
@@ -65,6 +75,7 @@ function Comments ({idUsed, setId}) {
                 <input type="button" onClick={postComment} value="Répondre" />
             </form>
         </div>
+        )
     )
 }        
 

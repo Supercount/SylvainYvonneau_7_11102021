@@ -4,6 +4,7 @@ import Person from "./Person";
 
 function Users ({logged, updateLogin, idUsed, setId}) {
     const [user, setUser] = useState(null);
+    const [userList, setList] = useState(null);
     
     function logout() {
         localStorage.removeItem("token");
@@ -15,7 +16,7 @@ function Users ({logged, updateLogin, idUsed, setId}) {
             let baseURL = `http://localhost:3001/api/auth/`;
             axios.get(baseURL)
             .then((response) => {
-                setUser(response.data);
+                setList(response.data);
             });
         } else {
             let userURL = `http://localhost:3001/api/auth/${idUsed}`;
@@ -48,11 +49,12 @@ function Users ({logged, updateLogin, idUsed, setId}) {
         .catch(() => alert("Vous n'êtes pas autorisé à supprimer ce compte!"));
     }
 
-    if (!user) return null;
+    if ((!userList && idUsed === 0) || (!user && idUsed !== 0)) return null;
+    
     
     return ( (idUsed === 0) ?
         <div>
-            {user.map(({id, username, email}) => (
+            {userList.map(({id, username, email}) => (
                 <div key={id} onClick={() => setId(id)}>
                     <Person id={id} username={username} email={email} />
                 </div>
