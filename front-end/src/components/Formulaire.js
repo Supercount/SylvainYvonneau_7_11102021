@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import '../styles/Formulaire.css'
 
 function Formulaire ({logged, updateLogin, form, updateForm}) {
     const [name, updateName] = useState("");
@@ -7,6 +8,12 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
     const [password, updatePass] = useState("");
     let loginURL = "http://localhost:3001/api/auth/login";
     let signupURL = "http://localhost:3001/api/auth/signup";
+
+    useEffect(() => {
+        updateName("");
+        updatePass("");
+        updateMail("");
+    },[form]);
 
     function login() {
         const user = {email: mail, password: password}
@@ -30,32 +37,38 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
     }
 
     return ( (form === "Connexion") ? 
+    <div className="formulaire">
+        <h1>Connexion</h1>
         <form>
-            <label>
-                Email :
-                <input id="email" type="email" value={mail} onChange={(e) => updateMail(e.target.value)}/>
+            <label >
+                Email : 
+                <input className="formulaire--champ" type="email" value={mail} onChange={(e) => updateMail(e.target.value)}/>
             </label>
-            <label>
-                Mot de passe :
-                <input id="password" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
+            <label >
+                Mot de passe : 
+                <input className="formulaire--champ" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
             </label>
-            <input type="button" onClick={login} value="Se connecter" />
-        </form> :  (form === "Inscription") ?
+            <input className="formulaire--bouton" type="button" onClick={login} value="Se connecter" />
+        </form>
+    </div> :  (form === "Inscription") ?
+    <div className="formulaire">
+        <h1>Inscription</h1>
         <form>
-            <label>
-                email :
-                <input id="email" type="email" value={mail} onChange={(e) => updateMail(e.target.value)}/>
+            <label >
+                Email : 
+                <input className="formulaire--champ" type="email" value={mail} onChange={(e) => updateMail(e.target.value)}/>
+            </label>
+            <label >
+                Nom d'utilisateur : 
+                <input className="formulaire--champ" type="text" value={name} onChange={(e) => updateName(e.target.value)}/>
             </label>
             <label>
-                Nom d'utilisateur :
-                <input id="password" type="text" value={name} onChange={(e) => updateName(e.target.value)}/>
+                Mot de passe : 
+                <input className="formulaire--champ" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
             </label>
-            <label>
-                Mot de passe :
-                <input id="password" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
-            </label>
-            <input type="button" onClick={signup} value="S'inscrire" />
-        </form> : null
+            <input className="formulaire--bouton" type="button" onClick={signup} value="S'inscrire" />
+        </form>
+    </div> : null
     )
 }
 

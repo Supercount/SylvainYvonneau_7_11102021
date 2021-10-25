@@ -17,7 +17,6 @@ function Comments ({idUsed, setId}) {
            })
         .then(() => {
             alert("réponse supprimée");
-            // setId(0);
         })
         .catch(() => alert("Vous n'êtes pas autorisé à supprimer cette réponse!"));
     }
@@ -64,6 +63,7 @@ function Comments ({idUsed, setId}) {
                     <div key={id}>
                         <input type="button" value="Supprimer la réponse" className="bouton--delete" onClick={() => commentDelete(id)} />
                         <Post contenu={contenu} username={username} date={date}/>
+                        <input type="button" value="Modifer" />
                     </div>
                 ))}
             </ul>

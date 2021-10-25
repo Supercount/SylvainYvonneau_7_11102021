@@ -1,11 +1,17 @@
 
-function Person({ id, username, email }) {
-	return (
+function Person({ username, email, isAdmin }) {
+
+	return ( (isAdmin === 0) ?
 		<li className='user'>
-			<span>{id}</span>
 			{username}
-			<span>{email}</span>
-		</li>
+			<p>{email}</p>
+			<p>Admin : Non</p>
+		</li> : 
+		<li className='user'>
+			{username}
+			<p>{email}</p>
+			<p>Admin : Oui</p>
+		</li> 
 	)
 }
 

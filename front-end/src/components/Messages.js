@@ -17,13 +17,13 @@ function Messages ({idUsed, setId}) {
               Authorization: 'Bearer ' + token
             }
            })
-        .then(() => {
-            // console.log("message supprimé");
+        .then((retour) => {
+            console.log("message supprimé" + retour);
             alert("Message supprimé");
             setId(0);
         })
-        .catch(() => {
-            // console.log("message supprimé");
+        .catch((error) => {
+            console.log("problème de suppression du message : "+ error);
             alert("Vous n'êtes pas autorisé à supprimer ce message!")
         });
     }
@@ -52,11 +52,11 @@ function Messages ({idUsed, setId}) {
                 <ul>
                     {postList.map(({titre, contenu, username, date, id}) => (
                         <div key={id} onClick={() => setId(id)}>
-                            <Post titre={titre} contenu={contenu} username={username}   date={date}/>
+                            <Post titre={titre} contenu={contenu} username={username} date={date}/>
                         </div>
                     ))}
                 </ul> 
-                <NewMessage />
+                <NewMessage idUsed={idUsed} setId={setId}/>
             </div> 
         )
         : (
