@@ -4,7 +4,7 @@ import Menu from './Menu';
 function Banner ({logged, updateLogin, form, updateForm}) {
     return (
         <div className="banniere">
-            <img className="banniere--logo" src="/icon-black.png" alt="Grouporama"/>
+            <img className="banniere--logo" src="/icon-white.png" alt="Grouporama"/>
             <Menu logged={logged} updateLogin={updateLogin} form={form} updateForm={updateForm}/>
         </div>
     )

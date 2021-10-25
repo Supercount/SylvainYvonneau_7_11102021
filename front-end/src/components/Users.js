@@ -53,15 +53,16 @@ function Users ({logged, updateLogin, idUsed, setId}) {
     
     
     return ( (idUsed === 0) ?
-        <div>
-            {userList.map(({id, username, email, isAdmin}) => (
+        <div className='userlist'>
+            <h1 className="titre--liste"> Liste des utilisateurs inscrits </h1>
+            {userList.map(({id, username, email}) => (
                 <div key={id} onClick={() => setId(id)}>
-                    <Person username={username} email={email}  isAdmin={isAdmin}/>
+                    <Person username={username} email={email} isAdmin='null'/>
                 </div>
             ))}
         </div> :
-        <div>
-            <p onClick={() => retourUsers()}> Retour </p>
+        <div className='user--alone'>
+            <p className="bouton--retour bouton" onClick={() => retourUsers()}> Retour à la liste</p>
             <Person username={user.username} email={user.email} isAdmin={user.isAdmin}/>
             <input type="button" value="Supprimer" className="bouton--delete" onClick={() => userDelete()} />
         </div>

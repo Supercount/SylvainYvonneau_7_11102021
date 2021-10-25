@@ -1,17 +1,25 @@
+import '../styles/Person.css'
 
 function Person({ username, email, isAdmin }) {
 
-	return ( (isAdmin === 0) ?
-		<li className='user'>
-			{username}
-			<p>{email}</p>
-			<p>Admin : Non</p>
-		</li> : 
-		<li className='user'>
-			{username}
-			<p>{email}</p>
-			<p>Admin : Oui</p>
-		</li> 
+	return ( 
+		(isAdmin === 'null') ? 
+		<div className='user'>
+			<p>Nom : <span className="user--name">{username}</span></p>
+			<p className="email">Email : {email}</p>
+		</div>
+		: 
+		(isAdmin === 0) ?
+		<div className="user--desc">
+			<h1 className="username">{username}</h1>
+			<p className="email">Adresse mail : {email}</p>
+			<p className="username">Administrateur : Non</p>
+		</div> : 
+		<div className="user--desc">
+			<h1 className="username">{username}</h1>
+			<p className="email">Adresse mail : {email}</p>
+			<p className="username">Administrateur : Oui</p>
+		</div> 
 	)
 }
 

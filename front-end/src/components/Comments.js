@@ -80,10 +80,3 @@ function Comments ({idUsed, setId}) {
 }        
 
 export default Comments;
-
-// let tokenFetch = JSON.parse(localStorage.getItem('jwt'))
-
-// // Dans la requête :
-// headers: {
-//  Authorization: `Bearer ${tokenFetch}`
-// }

@@ -4,7 +4,9 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: #ffd7d7;
+    background-color: #d1515a;
+    color: white;
+    font-weight: bold;
 }
 
 .banniere--logo {

@@ -1,6 +1,8 @@
 .foot {
     min-height: 50px;
     text-align: center;
-    background-color: #ffd7d7;
+    background-color: #d1515a;
     padding-top: 15px;
+    color: white;
+    font-weight: bold;
 }

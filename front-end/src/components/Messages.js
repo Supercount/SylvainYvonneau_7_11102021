@@ -49,19 +49,17 @@ function Messages ({idUsed, setId}) {
     
     return ( (idUsed === 0) ? (
             <div>
-                <ul>
-                    {postList.map(({titre, contenu, username, date, id}) => (
-                        <div key={id} onClick={() => setId(id)}>
-                            <Post titre={titre} contenu={contenu} username={username} date={date}/>
-                        </div>
-                    ))}
-                </ul> 
+                {postList.map(({titre, contenu, username, date, id}) => (
+                    <div key={id} onClick={() => setId(id)}>
+                        <Post titre={titre} contenu={contenu} username={username} date={date}/>
+                    </div>
+                ))}
                 <NewMessage idUsed={idUsed} setId={setId}/>
             </div> 
         )
         : (
             <div>
-                <p onClick={() => setId(0)}> Retour </p>
+                <p className="bouton--retour" onClick={() => setId(0)}> Retour </p>
                 <input type="button" value="Supprimer" className="bouton--delete" onClick={() => messageDelete()} />
                 <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date}/>
                 <Comments idUsed={idUsed} setId={setId}/>
