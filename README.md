@@ -1,1 +1,22 @@
 # SylvainYvonneau_7_11102021
+
+Projet concernant la création d'un réseau de communication interne à une entreprise.
+
+Cloner ce répertoire puis naviguer dans les répertoires de la manière suivante :
+
+## Partie Back-end ##
+
+- Se déplacer dans le sous-répertoire back-end
+- Lancer la commande `npm install`
+- Lancer la commande `nodemon server` pour lancer le back-end sur le port 3001
+Dans une autre fenêtre de commande :
+- Lancer la commande `npx sequelize-cli db:create grouporama`
+- Lancer la commande `npx sequelize-cli db:migrate`
+
+## Partie Front-end ##
+
+Dans une autre fenêtre de commande :
+- Se déplacer dans le sous-répertoire front-end
+- Lancer la commande `npm install`
+- Lancer la commande `npm start` pour lancer le back-end sur le port 3001
+
