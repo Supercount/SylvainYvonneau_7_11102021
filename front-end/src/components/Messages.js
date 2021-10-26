@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "./Post";
+import Change from "./Change";
 import Comments from './Comments';
 import NewMessage from "./NewMessage";
 
@@ -16,15 +17,13 @@ function Messages ({idUsed, setId}) {
             headers: {
               Authorization: 'Bearer ' + token
             }
-           })
-        .then((retour) => {
-            console.log("message supprimé" + retour);
+        })
+        .then(() => {
             alert("Message supprimé");
             setId(0);
         })
-        .catch((error) => {
-            console.log("problème de suppression du message : "+ error);
-            alert("Vous n'êtes pas autorisé à supprimer ce message!")
+        .catch(() => {
+            alert("Problème lors de la suppression du message!");
         });
     }
     
@@ -48,20 +47,22 @@ function Messages ({idUsed, setId}) {
     if ((!postList && idUsed === 0) || (!post && idUsed !== 0)) return null;
     
     return ( (idUsed === 0) ? (
-            <div>
+            <div className='messagelist'>
+                <h1 className="titre--liste"> Liste des messages écrits </h1>
                 {postList.map(({titre, contenu, username, date, id}) => (
                     <div key={id} onClick={() => setId(id)}>
-                        <Post titre={titre} contenu={contenu} username={username} date={date}/>
+                        <Post titre={titre} contenu={contenu} username={username} date={date} inList={true}/>
                     </div>
                 ))}
                 <NewMessage idUsed={idUsed} setId={setId}/>
             </div> 
         )
         : (
-            <div>
+            <div className="post--alone">
                 <p className="bouton--retour" onClick={() => setId(0)}> Retour </p>
                 <input type="button" value="Supprimer" className="bouton--delete" onClick={() => messageDelete()} />
-                <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date}/>
+                <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} />
+                <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date} inList={false}/>
                 <Comments idUsed={idUsed} setId={setId}/>
             </div> 
         )

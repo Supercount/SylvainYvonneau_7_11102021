@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/NewMessage.css"
 
 function NewMessage ({idUsed, setId}) {
     const [titre, updateTitre] = useState("");
@@ -24,23 +25,23 @@ function NewMessage ({idUsed, setId}) {
     }
 
     return ( creating ? (
-		<div>
+		<div className="create--post">
 			<button onClick={() => setCreate(false)}>
 				Fermer l'outil de création
 			</button>
-            <form>
+            <form className="newPost">
                 <label>
                     Titre :
-                    <input type="text" value={titre} onChange={(e) => updateTitre(e.target.value)}/>
+                    <input className="box" type="text" value={titre} onChange={(e) => updateTitre(e.target.value)}/>
                 </label>
                 <label>
-                    texte :
-                    <input type="text" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
+                    Texte :
+                    <input className="textbox box" type="text" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
                 </label>
                 <input type="button" onClick={createMessage} value="Poster" />
             </form>
 		</div> ): (
-		<div>
+		<div className="create--post">
 			<button onClick={() => setCreate(true)}>
 				Créer un nouveau post
 			</button>

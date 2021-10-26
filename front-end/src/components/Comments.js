@@ -16,6 +16,8 @@ function Comments ({idUsed, setId}) {
             }
            })
         .then(() => {
+            setId(0);
+            setId(idUsed);
             alert("réponse supprimée");
         })
         .catch(() => alert("Vous n'êtes pas autorisé à supprimer cette réponse!"));
@@ -31,6 +33,8 @@ function Comments ({idUsed, setId}) {
             }}
         )
         .then(() => {
+            setId(0);
+            setId(idUsed);
             alert("Réponse postée");
         })
         .catch((error) => alert(`Erreur lors de l'envoi du commentaire : ${error}`))

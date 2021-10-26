@@ -1,0 +1,20 @@
+.create--post {
+    width: 100%;
+}
+
+.newPost {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 300px;
+    align-items: center;
+}
+
+.box {
+    margin-left: 20px;
+}
+
+.textbox {
+    width: 400px;
+    height: 120px;
+}

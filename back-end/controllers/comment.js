@@ -90,38 +90,5 @@ module.exports = {
         .catch( error => {
             return res.status(400).json({error : error});
         })
-    },
-    modifyComment: function(req,res,next) {
-        Comment.findOne({
-            attributes: ['idUser'],
-            where: { id: req.params.idcom }
-        })
-        .then( retour => {
-            let isAutorised = jwt.checkautorisation(req, retour.idUser);
-            if (isAutorised) {
-                
-                const newComment =  {
-                    contenu : req.body.contenu
-                };
-                Comment.update(
-                    {
-                        contenu: newComment.contenu
-                    },
-                    {where: { id: req.params.idcom }}
-                    )
-                    .then(()=> {
-                        return res.status(201).json({message:"Commentaire modifié"})
-                    })
-                    .catch((error) => {
-                        return res.status(400).json({error : `erreur de l'update : ${error}`});
-                    }
-                )
-            } else {
-                return res.status(403).json({error : "Vous n'êtes pas autorisé à modifier ce commentaire!"})
-            }
-        })
-        .catch( error => {
-            return res.status(400).json({error : error});
-        })
     }
 }

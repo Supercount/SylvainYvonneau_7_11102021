@@ -13,6 +13,5 @@ routeur.delete('/:id', postCtrl.deletePost);
 routeur.get('/:idpost/comment/', commentCtrl.getComments);
 routeur.post('/:idpost/comment/', commentCtrl.createComments);
 routeur.delete('/:idpost/comment/:idcom', commentCtrl.deleteComments);
-routeur.put('/:idpost/comment/:idcom', commentCtrl.modifyComment);
 
 module.exports = routeur;

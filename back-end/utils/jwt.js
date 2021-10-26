@@ -21,7 +21,6 @@ module.exports = {
   checkAdmin: function(req) {
     let admin = false;
     const token = module.exports.parseToken(req);
-    console.log(token)
     if(token != null) {
           admin = token.isAdmin;
     }
@@ -30,7 +29,6 @@ module.exports = {
   checkautorisation: function(req, id) {
     let checkId = module.exports.recupereId(req);
     let admin = module.exports.checkAdmin(req);
-    console.log(admin);
     if (!admin) {
       return (checkId == id);
     }

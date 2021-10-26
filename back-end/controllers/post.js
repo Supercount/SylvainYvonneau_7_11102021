@@ -80,50 +80,50 @@ module.exports = {
         .then( retour => {
             let isAutorised = jwt.checkautorisation(req, retour.idUser);
             if (isAutorised) {
-                Post.findOne({
-                    where: { id: postId }
+                Comment.findAll({
+                    where: { idPost: postId }
                 })
-                .then( (post) => {
-                    // const imagePost = post.imageUrl.split('/images/')[1];
-                    // fs.unlink(`images/${imagePost}`,() => {});
-                })
-                .catch((error) => {
-                    return res.status(404).json({error : `créateur non trouvé : ${error}`});
-                });
-                Post.destroy({
-                    where: { id: postId }
-                })
-                .then( retour => {
-                    if (retour == 1) {
-                        Comment.findAll({
+                .then((list) => {
+                    if (list.length !== 0) {
+                        Comment.destroy({
                             where: { idPost: postId }
                         })
-                        .then((list) => {
-                            if (list.length !== 0) {
-                                Comment.destroy({
-                                    where: { idPost: postId }
-                                })
-                                .then( retour => {
-                                    if (retour == 1) {
-                                        return res.status(200).json({message : "Post et commentaires supprimés!"});
-                                    } else {
-                                        return res.status(400).json({error : "Problème lors de la suppression des commentaires associés"});
-                                    }
-                                })
-                                .catch( error => {
-                                    return res.status(400).json({error : error});
-                                })
-                            }
+                        .then(() => {
+                            Post.destroy({
+                                where: { id: postId }
+                            })
+                            .then((val) => {
+                                if (val === 1) {
+                                    return res.status(200).json({message : "Post et commentaires supprimés!"});
+                                } else {
+                                    return res.status(400).json({error : "Problème lors de la suppression du post"});
+                                }
+                            })
+                            .catch( error => {
+                                return res.status(400).json({error : error});
+                            })
                         })
-                        .catch(error => {
-                            return res.status(400).json({error : error});
+                        .catch( error => {
+                            return res.status(400).json({error : `catch du destroy comments: ${error}`});
                         })
                     } else {
-                        return res.status(400).json({error : "Problème lors de la suppression du post"});
+                        Post.destroy({
+                            where: { id: postId }
+                        })
+                        .then((val) => {
+                            if (val === 1) {
+                                return res.status(200).json({message : "Post supprimé!"});
+                            } else {
+                                return res.status(400).json({error : "Problème lors de la suppression du post"});
+                            }
+                        })
+                        .catch( error => {
+                            return res.status(400).json({error : error});
+                        })
                     }
                 })
-                .catch( error => {
-                    return res.status(400).json({error : error});
+                .catch(error => {
+                    return res.status(400).json({error : `catch du findall Comments : ${error}`});
                 })
             } else {
                 return res.status(403).json({error : "Vous n'êtes pas autorisé à supprimer ce post!"})
