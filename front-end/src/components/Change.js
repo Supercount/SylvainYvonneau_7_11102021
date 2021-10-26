@@ -27,9 +27,9 @@ function Change({idUsed, setId, titre, contenu}) {
 
 	return ( modifying ? (
 		<div className="create--post">
-			<button onClick={() => setModify(false)}>
+			<p onClick={() => setModify(false)}>
 				Annuler la modification
-			</button>
+			</p>
             <form className="newPost">
                 <label>
                     Titre :
@@ -43,9 +43,9 @@ function Change({idUsed, setId, titre, contenu}) {
             </form>
 		</div> ): (
 		<div className="create--post">
-			<button onClick={() => setModify(true)}>
+			<p onClick={() => setModify(true)}>
 				Modifier
-			</button>
+			</p>
 		</div>
 	)
     );

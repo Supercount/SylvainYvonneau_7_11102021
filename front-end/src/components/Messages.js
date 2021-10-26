@@ -60,9 +60,11 @@ function Messages ({idUsed, setId}) {
         : (
             <div className="post--alone">
                 <p className="bouton--retour" onClick={() => setId(0)}> Retour </p>
-                <input type="button" value="Supprimer" className="bouton--delete" onClick={() => messageDelete()} />
-                <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} />
-                <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date} inList={false}/>
+                <div className="post--zone">
+                    <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date} inList={false}/>
+                    <input type="button" value="Supprimer" className="bouton--delete" onClick={() => messageDelete()} />
+                    <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} />
+                </div>
                 <Comments idUsed={idUsed} setId={setId}/>
             </div> 
         )

@@ -15,6 +15,13 @@
     margin: 15px;
 }
 
+.post--zone {
+    margin: auto;
+    /* max-width: 40%; */
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .post--alone {
     margin-top: 50px;
     text-align: center;
@@ -23,4 +30,16 @@
 .post--desc {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.post--titre{
+    color: black;
+}
+
+.post--auteur {
+    color: black;
+}
+
+.post--date {
+    font-style: italic;
 }
