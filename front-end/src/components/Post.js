@@ -11,8 +11,8 @@ function Post({ titre, contenu, username, date, inList }) {
 		</div> : 
 		<div className='post--desc'>
 			<h1 className="post--titre">{titre}</h1>
-			<p className="post--auteur">Ecrit par : <strong>{username}</strong></p>
-			<p>{contenu}</p>
+			<p className="post--auteur">par : <strong>{username}</strong></p>
+			<p className="post--contenu">{contenu}</p>
             <p className="post--date"><Moment format="HH:mm:ss DD/MM/YYYY">{date}</Moment></p>
 		</div>
 	)

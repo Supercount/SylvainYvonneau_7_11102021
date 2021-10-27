@@ -6,6 +6,7 @@ import Post from "./Post";
 function Comments ({idUsed, setId}) {
     const [comment, setComment] = useState(null);
     const [reponse, updateReponse] = useState("");
+	const [adding, setAdding] = useState(false);
     
     function commentDelete(id) {
         let baseURL = `http://localhost:3001/api/post/${idUsed}/comment/${id}`;
@@ -26,6 +27,7 @@ function Comments ({idUsed, setId}) {
     function postComment(e) {
         e.preventDefault();
         const commentaire = {contenu: reponse};
+        updateReponse("");
         let postURL = `http://localhost:3001/api/post/${idUsed}/comment/`;
         let token = localStorage.getItem("token");
         axios.post(postURL,commentaire, {
@@ -43,44 +45,73 @@ function Comments ({idUsed, setId}) {
 
     useEffect(() => {
             let postURL = `http://localhost:3001/api/post/${idUsed}/comment`;
-            axios.get(postURL).then((response) => {
+            axios.get(postURL)
+            .then((response) => {
                 setComment(response.data);
-            });
+            })
+            .catch((error) => console.log(`erreur produite : ${error}`));
         }, [idUsed]
     );
-    
-    return ( (!comment) ?
-        (
-            <div>
-                <form>
-                    <label>
-                        Répondre :
-                        <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
-                    </label>
-                    <input type="button" onClick={postComment} value="Répondre" />
-                </form>
-            </div>
+
+    if (!comment) {
+        return ( (adding) ? (
+                <div>
+			        <p className="text--action" onClick={() => setAdding(false)}>
+			        	Annuler
+			        </p>
+                    <form>
+                        <label>
+                            Répondre :
+                            <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
+                        </label>
+                        <input type="button" onClick={postComment} value="Répondre" />
+                    </form>
+                </div>
+            ) : (
+			    <p className="text--action" onClick={() => setAdding(true)}>
+			    	Ajouter une réponse
+			    </p>
+            )
+        );
+    } else {
+        return ( (adding) ? (
+                <div className="list--comment">
+                    <ul>
+                        {comment.map(({contenu, username, date, id}) => (
+                            <div key={id}>
+                                <Post contenu={contenu} username={username} date={date}/>
+                                <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
+                            </div>
+                        ))}
+                    </ul>
+                    <p className="text--action" onClick={() => setAdding(false)}>
+		    	    	Annuler
+		    	    </p>
+                    <form>
+                        <label>
+                            Répondre :
+                            <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
+                        </label>
+                        <input type="submit" onClick={postComment} value="Répondre" />
+                    </form>
+                </div>
+            ) : (
+                <div className="list--comment">
+                    <ul>
+                        {comment.map(({contenu, username, date, id}) => (
+                            <div key={id}>
+                                <Post contenu={contenu} username={username} date={date}/>
+                                <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
+                            </div>
+                        ))}
+                    </ul>
+		    	    <p className="text--action" onClick={() => setAdding(true)}>
+		    	    	Ajouter une réponse
+		    	    </p>
+                </div>
+            )
         )
-        : (
-        <div>
-            <ul>
-                {comment.map(({contenu, username, date, id}) => (
-                    <div key={id}>
-                        <input type="button" value="Supprimer la réponse" className="bouton--delete" onClick={() => commentDelete(id)} />
-                        <Post contenu={contenu} username={username} date={date}/>
-                    </div>
-                ))}
-            </ul>
-            <form>
-                <label>
-                    Répondre :
-                    <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
-                </label>
-                <input type="submit" onClick={postComment} value="Répondre" />
-            </form>
-        </div>
-        )
-    )
+    }
 }        
 
 export default Comments;

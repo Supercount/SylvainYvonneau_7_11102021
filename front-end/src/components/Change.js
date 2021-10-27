@@ -18,17 +18,19 @@ function Change({idUsed, setId, titre, contenu}) {
             }}
         )
         .then(() => {
+            updateTitre("");
+            updateCorps("");
             alert("Post Modifié");
             setId(0);
             setId(idUsed);
             setModify(false);
         })
-        .catch(() => alert(`Erreur lors de la Modification du post.`))
+        .catch(() => alert(`Erreur lors de la Modification du post.`));
     }
 
 	return ( modifying ? (
 		<div className="create--post">
-			<p onClick={() => setModify(false)}>
+			<p className="text--action" onClick={() => setModify(false)}>
 				Annuler la modification
 			</p>
             <form className="newPost">
@@ -44,7 +46,7 @@ function Change({idUsed, setId, titre, contenu}) {
             </form>
 		</div> ): (
 		// <div >
-			<p onClick={() => setModify(true)}>
+			<p className="text--action" onClick={() => setModify(true)}>
 				Modifier
 			</p>
 		// </div>

@@ -17,10 +17,12 @@
 }
 
 .post--zone {
+    max-width: 60%;
+    width: 30%;
     margin: auto;
-    /* max-width: 40%; */
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .post--alone {
@@ -30,19 +32,33 @@
 
 .post--desc {
     width: 100%;
-    /* margin-top: 10px; */
-    margin-bottom: 20px;
+    background-color: #cacaca;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    position: relative;
 }
 
 .post--titre{
+    flex-grow: 1;
     margin-top: 0px;
     color: black;
 }
 
+.post--contenu {
+    width: 100%;
+}
+
 .post--auteur {
+    position: absolute;
+    right: 10px;
     color: black;
 }
 
 .post--date {
     font-style: italic;
+}
+
+.text--action {
+    margin: 0;
 }

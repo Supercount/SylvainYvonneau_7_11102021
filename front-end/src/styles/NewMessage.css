@@ -28,6 +28,6 @@
 .textbox {
     white-space: normal;
     overflow: visible;
-    max-width: 400px;
-    max-height: 120px;
+    width: 300px;
+    height: 120px;
 }
