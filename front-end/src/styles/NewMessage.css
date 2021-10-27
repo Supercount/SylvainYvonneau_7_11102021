@@ -3,9 +3,9 @@
     width: 100%;
 }
 
-.create--post button {
+/* .create--post button {
     cursor: pointer;
-}
+} */
 
 .newPost {
     display: flex;

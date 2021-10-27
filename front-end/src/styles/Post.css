@@ -36,7 +36,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    position: relative;
 }
 
 .post--titre{
@@ -50,15 +49,21 @@
 }
 
 .post--auteur {
-    position: absolute;
-    right: 10px;
     color: black;
+    margin-bottom: 8px;
 }
 
 .post--date {
     font-style: italic;
+    margin-bottom: 8px;
 }
 
 .text--action {
-    margin: 0;
+    margin-top: 10px;
+}
+
+.form--comment {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
 }

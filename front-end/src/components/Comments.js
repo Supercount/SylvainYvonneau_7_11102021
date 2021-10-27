@@ -44,70 +44,73 @@ function Comments ({idUsed, setId}) {
     }
 
     useEffect(() => {
+            setComment(null);
             let postURL = `http://localhost:3001/api/post/${idUsed}/comment`;
-            axios.get(postURL)
-            .then((response) => {
-                setComment(response.data);
-            })
-            .catch((error) => console.log(`erreur produite : ${error}`));
+            if (idUsed !== 0) {
+                axios.get(postURL)
+                .then((response) => {
+                    setComment(response.data);
+                })
+                .catch((error) => console.log(`erreur produite : ${error}`));
+            }
         }, [idUsed]
     );
 
     if (!comment) {
         return ( (adding) ? (
                 <div>
-			        <p className="text--action" onClick={() => setAdding(false)}>
+			        <button className="bouton--create" onClick={() => setAdding(false)}>
 			        	Annuler
-			        </p>
-                    <form>
+			        </button>
+                    <form className="form--comment">
                         <label>
                             Répondre :
                             <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
                         </label>
-                        <input type="button" onClick={postComment} value="Répondre" />
+                        <input type="submit" className="bouton--create" onClick={postComment} value="Répondre"/>
                     </form>
                 </div>
             ) : (
-			    <p className="text--action" onClick={() => setAdding(true)}>
+			    <button className="bouton--create" onClick={() => setAdding(true)}>
 			    	Ajouter une réponse
-			    </p>
+			    </button>
             )
         );
     } else {
         return ( (adding) ? (
                 <div className="list--comment">
-                    <ul>
+                    <div className="post--zone">
                         {comment.map(({contenu, username, date, id}) => (
                             <div key={id}>
                                 <Post contenu={contenu} username={username} date={date}/>
                                 <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
                             </div>
                         ))}
-                    </ul>
-                    <p className="text--action" onClick={() => setAdding(false)}>
-		    	    	Annuler
-		    	    </p>
-                    <form>
+                    </div>
+			        <button className="bouton--create" onClick={() => setAdding(false)}>
+			        	Annuler
+			        </button>
+                    <form className="form--comment">
                         <label>
                             Répondre :
                             <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
                         </label>
-                        <input type="submit" onClick={postComment} value="Répondre" />
+                        <button className="bouton--create" onClick={postComment}>Répondre</button>
                     </form>
                 </div>
             ) : (
                 <div className="list--comment">
-                    <ul>
+                    <div className="post--zone">
                         {comment.map(({contenu, username, date, id}) => (
                             <div key={id}>
                                 <Post contenu={contenu} username={username} date={date}/>
                                 <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
                             </div>
                         ))}
-                    </ul>
-		    	    <p className="text--action" onClick={() => setAdding(true)}>
-		    	    	Ajouter une réponse
-		    	    </p>
+                    </div>
+			        <button className="bouton--create" onClick={() => setAdding(true)}>
+			        	Ajouter une réponse
+			        </button>
                 </div>
             )
         )

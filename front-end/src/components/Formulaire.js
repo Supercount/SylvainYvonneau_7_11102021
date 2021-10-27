@@ -23,8 +23,8 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
             localStorage.setItem("token",response.data.token);
             updateLogin(true);
         })
-        .catch(() => {
-            alert("Connexion refusée");
+        .catch((error) => {
+            alert("Connexion refusée : " + error);
         });
     }
 

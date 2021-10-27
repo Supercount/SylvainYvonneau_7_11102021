@@ -6,26 +6,28 @@ function Change({idUsed, setId, titre, contenu}) {
     const [corps, updateCorps] = useState(contenu);
 	const [modifying, setModify] = useState(false);
 
-    
+
     function updateMessage (e) {
         e.preventDefault();
         const post = {titre : newtitre, contenu: corps};
         let postURL = `http://localhost:3001/api/post/${idUsed}`;
         let token = localStorage.getItem("token");
-        axios.put(postURL,post, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }}
-        )
-        .then(() => {
-            updateTitre("");
-            updateCorps("");
-            alert("Post Modifié");
-            setId(0);
-            setId(idUsed);
-            setModify(false);
-        })
-        .catch(() => alert(`Erreur lors de la Modification du post.`));
+        if (idUsed !== 0) {
+            axios.put(postURL,post, {
+                headers: {
+                  Authorization: 'Bearer ' + token
+                }}
+            )
+            .then(() => {
+                updateTitre("");
+                updateCorps("");
+                alert("Post Modifié");
+                setId(0);
+                setId(idUsed);
+                setModify(false);
+            })
+            .catch(() => alert(`Erreur lors de la Modification du post.`));
+        }
     }
 
 	return ( modifying ? (
@@ -42,14 +44,12 @@ function Change({idUsed, setId, titre, contenu}) {
                     Texte :
                     <textarea className="textbox box" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
                 </label>
-                <input type="submit" onClick={updateMessage} value="Modifier" />
+                <input className="bouton--create" type="submit" onClick={updateMessage} value="Modifier" />
             </form>
 		</div> ): (
-		// <div >
 			<p className="text--action" onClick={() => setModify(true)}>
 				Modifier
 			</p>
-		// </div>
 	)
     );
 }

@@ -62,7 +62,7 @@ function Messages ({idUsed, setId}) {
                 <p className="bouton--retour" onClick={() => setId(0)}> Retour </p>
                 <div className="post--zone">
                     <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date} inList={false}/>
-                    <p className="text--action" onClick={() => messageDelete()}>Supprimer</p>
+                    <p className="text--action" onClick={() => messageDelete()}>Supprimer le post</p>
                     <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} />
                 </div>
                 <Comments idUsed={idUsed} setId={setId}/>

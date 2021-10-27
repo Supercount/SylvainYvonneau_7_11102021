@@ -7,13 +7,13 @@ function Post({ titre, contenu, username, date, inList }) {
 			<h1>{titre}</h1>
 			<p>{contenu}</p>
 			<p>Ecrit par : <strong>{username}</strong></p>
-            <p><Moment format="HH:mm:ss DD/MM/YYYY">{date}</Moment></p>
+            <p>le <Moment format="DD/MM/YYYY">{date}</Moment> à <Moment format="HH:mm:ss">{date}</Moment></p>
 		</div> : 
 		<div className='post--desc'>
 			<h1 className="post--titre">{titre}</h1>
-			<p className="post--auteur">par : <strong>{username}</strong></p>
 			<p className="post--contenu">{contenu}</p>
-            <p className="post--date"><Moment format="HH:mm:ss DD/MM/YYYY">{date}</Moment></p>
+			<p className="post--auteur">par : <strong>{username}</strong></p>
+            <p className="post--date">le <Moment format="DD/MM/YYYY">{date}</Moment> à <Moment format="HH:mm:ss">{date}</Moment></p>
 		</div>
 	)
 }
