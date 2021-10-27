@@ -15,7 +15,8 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
         updateMail("");
     },[form]);
 
-    function login() {
+    function login(e) {
+        e.preventDefault();
         const user = {email: mail, password: password}
         axios.post(loginURL, user)
         .then((response) => {
@@ -27,13 +28,14 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
         });
     }
 
-    function signup() {
+    function signup(e) {
+        e.preventDefault();
         const user = {email: mail, username: name, password: password}
         axios.post(signupURL, user)
         .then((response) => {
             alert(`${response.data.message}. Vous pouvez vous identifier`)
         })
-        .catch((error) => alert(`Erreur lors de l'inscription : ${error}`));
+        .catch(() => alert(`Inscription refusée`));
     }
 
     return ( (form === "Connexion") ? 
@@ -48,7 +50,7 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
                 Mot de passe : 
                 <input className="formulaire--champ" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
             </label>
-            <input className="formulaire--bouton" type="button" onClick={login} value="Se connecter" />
+            <input className="formulaire--bouton" type="submit" onClick={login} value="Se connecter" />
         </form>
     </div> :  (form === "Inscription") ?
     <div className="formulaire">
@@ -66,7 +68,7 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
                 Mot de passe : 
                 <input className="formulaire--champ" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
             </label>
-            <input className="formulaire--bouton" type="button" onClick={signup} value="S'inscrire" />
+            <input className="formulaire--bouton" type="submit" onClick={signup} value="S'inscrire" />
         </form>
     </div> : null
     )

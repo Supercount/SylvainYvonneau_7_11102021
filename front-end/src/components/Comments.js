@@ -23,7 +23,8 @@ function Comments ({idUsed, setId}) {
         .catch(() => alert("Vous n'êtes pas autorisé à supprimer cette réponse!"));
     }
     
-    function postComment() {
+    function postComment(e) {
+        e.preventDefault();
         const commentaire = {contenu: reponse};
         let postURL = `http://localhost:3001/api/post/${idUsed}/comment/`;
         let token = localStorage.getItem("token");
@@ -67,7 +68,6 @@ function Comments ({idUsed, setId}) {
                     <div key={id}>
                         <input type="button" value="Supprimer la réponse" className="bouton--delete" onClick={() => commentDelete(id)} />
                         <Post contenu={contenu} username={username} date={date}/>
-                        <input type="button" value="Modifer" />
                     </div>
                 ))}
             </ul>
@@ -76,7 +76,7 @@ function Comments ({idUsed, setId}) {
                     Répondre :
                     <input type="text" value={reponse} onChange={(e) => updateReponse(e.target.value)}/>
                 </label>
-                <input type="button" onClick={postComment} value="Répondre" />
+                <input type="submit" onClick={postComment} value="Répondre" />
             </form>
         </div>
         )

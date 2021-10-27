@@ -1,5 +1,9 @@
 .create--post {
-    /* width: 100%; */
+    /* margin: auto; */
+    width: 100%;
+}
+
+.create--post button {
     cursor: pointer;
 }
 
@@ -15,7 +19,15 @@
     margin-left: 20px;
 }
 
+.newPost label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .textbox {
-    width: 400px;
-    height: 120px;
+    white-space: normal;
+    overflow: visible;
+    max-width: 400px;
+    max-height: 120px;
 }

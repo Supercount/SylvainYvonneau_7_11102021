@@ -7,7 +7,8 @@ function Change({idUsed, setId, titre, contenu}) {
 	const [modifying, setModify] = useState(false);
 
     
-    function updateMessage () {
+    function updateMessage (e) {
+        e.preventDefault();
         const post = {titre : newtitre, contenu: corps};
         let postURL = `http://localhost:3001/api/post/${idUsed}`;
         let token = localStorage.getItem("token");
@@ -17,12 +18,12 @@ function Change({idUsed, setId, titre, contenu}) {
             }}
         )
         .then(() => {
+            alert("Post Modifié");
             setId(0);
             setId(idUsed);
             setModify(false);
-            alert("Post Modifié");
         })
-        .catch((error) => alert(`Erreur lors de la Modification du post : ${error}`))
+        .catch(() => alert(`Erreur lors de la Modification du post.`))
     }
 
 	return ( modifying ? (
@@ -37,16 +38,16 @@ function Change({idUsed, setId, titre, contenu}) {
                 </label>
                 <label>
                     Texte :
-                    <input className="textbox box" type="text" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
+                    <textarea className="textbox box" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
                 </label>
-                <input type="button" onClick={updateMessage} value="Modifier" />
+                <input type="submit" onClick={updateMessage} value="Modifier" />
             </form>
 		</div> ): (
-		<div className="create--post">
+		// <div >
 			<p onClick={() => setModify(true)}>
 				Modifier
 			</p>
-		</div>
+		// </div>
 	)
     );
 }

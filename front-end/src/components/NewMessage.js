@@ -7,7 +7,8 @@ function NewMessage ({idUsed, setId}) {
     const [corps, updateCorps] = useState("");
 	const [creating, setCreate] = useState(false);
 
-    function createMessage () {
+    function createMessage (e) {
+        e.preventDefault();
         const post = {titre : titre, contenu: corps};
         let postURL = `http://localhost:3001/api/post/`;
         let token = localStorage.getItem("token");
@@ -26,8 +27,8 @@ function NewMessage ({idUsed, setId}) {
 
     return ( creating ? (
 		<div className="create--post">
-			<button onClick={() => setCreate(false)}>
-				Fermer l'outil de création
+			<button className="bouton--create" onClick={() => setCreate(false)}>
+				Annuler
 			</button>
             <form className="newPost">
                 <label>
@@ -36,13 +37,13 @@ function NewMessage ({idUsed, setId}) {
                 </label>
                 <label>
                     Texte :
-                    <input className="textbox box" type="text" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
+                    <textarea className="textbox box" value={corps} onChange={(e) => updateCorps(e.target.value)}/>
                 </label>
-                <input type="button" onClick={createMessage} value="Poster" />
+                <button className="bouton--create" type="submit" onClick={createMessage}>Poster</button>
             </form>
 		</div> ): (
 		<div className="create--post">
-			<button onClick={() => setCreate(true)}>
+			<button className="bouton--create" onClick={() => setCreate(true)}>
 				Créer un nouveau post
 			</button>
 		</div>

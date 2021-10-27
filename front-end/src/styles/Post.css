@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
+    text-align: center;
 }
 
 .post {
@@ -23,16 +24,18 @@
 }
 
 .post--alone {
-    margin-top: 50px;
+    margin-top: 30px;
     text-align: center;
 }
 
 .post--desc {
-    margin-top: 20px;
+    width: 100%;
+    /* margin-top: 10px; */
     margin-bottom: 20px;
 }
 
 .post--titre{
+    margin-top: 0px;
     color: black;
 }
 
