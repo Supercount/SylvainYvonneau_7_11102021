@@ -47,3 +47,15 @@ main {
     background-color: #d1515a;
     color: white;
 }
+
+.bouton--choix {
+    margin: auto;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: #091f43  1px solid;
+    background-color: #d1515a;
+    color: white;
+}
