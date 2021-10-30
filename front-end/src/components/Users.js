@@ -7,8 +7,8 @@ function Users ({logged, updateLogin, idUsed, setId}) {
     const [userList, setList] = useState(null);
     
     function logout() {
-        localStorage.removeItem("token");
-        updateLogin(false);
+        // localStorage.removeItem("token");
+        // updateLogin(false);
     }
     
     useEffect(() => {

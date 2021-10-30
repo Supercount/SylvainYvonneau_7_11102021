@@ -14,36 +14,24 @@ module.exports = {
         if ( newMail == null || newName == null || newPass == null ) {
             return res.status(400).json({error: "Paramètres manquants"});
         }
-        User.findOne({
-            attributes: ['email'],
-            where: { email: newMail }
+        bcryptjs.hash(newPass, 10)
+        .then((hash) => {
+            User.create({
+                email: newMail,
+                username: newName,
+                password: hash,
+                isAdmin: admin
+            })
+            .then( (newUser)=> {
+                return res.status(201).json({userId:newUser.id,message:"Utilisateur créé"})
+            })
+            .catch((error) => {
+                return res.status(400).json({error : error});
+            });
         })
-        .then( (user) => {
-            if (!user) {
-                bcryptjs.hash(newPass, 10)
-                .then((hash) => {
-                    User.create({
-                        email: newMail,
-                        username: newName,
-                        password: hash,
-                        isAdmin: admin
-                    })
-                    .then( (newUser)=> {
-                        return res.status(201).json({userId:newUser.id,message:"Utilisateur créé"})
-                    })
-                    .catch((error) => {
-                        return res.status(400).json({error : error});
-                    });
-                })
-                .catch(error => {
-                    return res.status(500).json({error : error});
-                });
-            } else { () => {
-                return res.status(409).json({error: 'Utilisateur existant' });
-                }
-            }
-        })
-        .catch((error) => res.status(500).json({error: error}));
+        .catch(error => {
+            return res.status(500).json({error : error});
+        });
     },    
     login: function(req, res, next) {
         let newMail = req.body.email;

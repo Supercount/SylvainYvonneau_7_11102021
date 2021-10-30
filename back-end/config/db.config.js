@@ -1,13 +1,13 @@
-module.exports = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: process.env.db_PASSWORD,
-    DB: "grouporama",
-    dialect: "mysql",
-    pool: {
-      max: 10,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
-  };
+// module.exports = {
+//     HOST: "localhost",
+//     USER: "root",
+//     PASSWORD: process.env.db_PASSWORD,
+//     DB: "grouporama",
+//     dialect: "mysql",
+//     pool: {
+//       max: 10,
+//       min: 0,
+//       acquire: 30000,
+//       idle: 10000
+//     }
+//   };
