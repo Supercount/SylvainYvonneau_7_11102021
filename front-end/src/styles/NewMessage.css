@@ -8,6 +8,7 @@
 } */
 
 .newPost {
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -20,6 +21,7 @@
 }
 
 .newPost label {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;

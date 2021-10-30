@@ -34,7 +34,7 @@ main {
     text-align: center;
 }
 
-.bouton--create {
+.bouton--create, .bouton--delete {
     margin: auto;
     cursor: pointer;
     font-size: 20px;
