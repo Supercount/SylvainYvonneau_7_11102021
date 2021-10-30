@@ -1,28 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "./Post";
+import '../styles/Post.css'
+import Delete from "./Delete";
 
 
-function Comments ({idUsed, setId}) {
+function Comments ({idUsed, setId, admin, idLogged}) {
     const [comment, setComment] = useState(null);
     const [reponse, updateReponse] = useState("");
 	const [adding, setAdding] = useState(false);
-    
-    function commentDelete(id) {
-        let baseURL = `http://localhost:3001/api/post/${idUsed}/comment/${id}`;
-        let token = localStorage.getItem("token");
-        axios.delete(baseURL, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }
-           })
-        .then(() => {
-            setId(0);
-            setId(idUsed);
-            alert("réponse supprimée");
-        })
-        .catch(() => alert("Vous n'êtes pas autorisé à supprimer cette réponse!"));
-    }
     
     function postComment(e) {
         e.preventDefault();
@@ -83,7 +69,7 @@ function Comments ({idUsed, setId}) {
                         {comment.map(({contenu, username, date, id}) => (
                             <div key={id}>
                                 <Post contenu={contenu} username={username} date={date}/>
-                                <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
+                                <Delete idPost={idUsed} idComment={id} setId={setId} idUsed={comment.idUser} admin={admin} idLogged={idLogged} type="Comment"/>
                             </div>
                         ))}
                     </div>
@@ -104,7 +90,7 @@ function Comments ({idUsed, setId}) {
                         {comment.map(({contenu, username, date, id}) => (
                             <div key={id}>
                                 <Post contenu={contenu} username={username} date={date}/>
-                                <p className="text--action" onClick={() => commentDelete(id)}>Supprimer la réponse</p>
+                                <Delete idPost={idUsed} idComment={id} setId={setId} idUsed={comment.idUser} admin={admin} idLogged={idLogged} type="Comment"/>
                             </div>
                         ))}
                     </div>

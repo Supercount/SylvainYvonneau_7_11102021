@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Person from "./Person";
+import Delete from "./Delete";
 
-function Users ({logged, updateLogin, idUsed, setId}) {
+function Users ({updateLogin, idUsed, setId, admin, idLogged}) {
     const [user, setUser] = useState(null);
     const [userList, setList] = useState(null);
-    
-    function logout() {
-        // localStorage.removeItem("token");
-        // updateLogin(false);
-    }
     
     useEffect(() => {
         if (idUsed === 0) {
@@ -37,18 +33,6 @@ function Users ({logged, updateLogin, idUsed, setId}) {
         });
     }
 
-    function userDelete() {
-        let baseURL = `http://localhost:3001/api/auth/${idUsed}`;
-        let token = localStorage.getItem("token");
-        axios.delete(baseURL, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }
-           })
-        .then(() => logout())
-        .catch(() => alert("Vous n'êtes pas autorisé à supprimer ce compte!"));
-    }
-
     if ((!userList && idUsed === 0) || (!user && idUsed !== 0)) return null;
     
     
@@ -64,9 +48,9 @@ function Users ({logged, updateLogin, idUsed, setId}) {
         <div className='user--alone'>
             <p className="bouton--retour bouton" onClick={() => retourUsers()}> Retour à la liste</p>
             <Person username={user.username} email={user.email} isAdmin={user.isAdmin}/>
-            <input type="button" value="Supprimer" className="bouton--delete" onClick={() => userDelete()} />
+            <Delete updateLogin={updateLogin} idUsed={idUsed} admin={admin} idLogged={idLogged} type="User"/>
         </div>
     );
-}        
+}
 
 export default Users;

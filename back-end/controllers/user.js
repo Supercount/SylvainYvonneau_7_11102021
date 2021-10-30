@@ -47,7 +47,9 @@ module.exports = {
                 .then( isValid => {
                     if (isValid) {
                         return res.status(200).json({
-                            token : jwt.genererToken(userFound)
+                            token : jwt.genererToken(userFound),
+                            admin : userFound.isAdmin,
+                            id : userFound.id
                         });
                     } else {
                         return res.status(401).json({error : "Mot de passe incorrect!"});

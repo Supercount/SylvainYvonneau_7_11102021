@@ -58,7 +58,8 @@ module.exports = {
                         titre: post.titre,
                         contenu: post.contenu,
                         date: post.date,
-                        username: user.username
+                        username: user.username,
+                        idUser: post.idUser
                     };
                     return res.status(200).json(valeur);
                 })

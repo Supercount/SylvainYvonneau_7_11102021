@@ -1,10 +1,12 @@
 
 
-function Menu ({logged, updateLogin, form, updateForm}) {
+function Menu ({logged, updateLogin, updateForm, setAdmin, setLogged}) {
     
     function logout() {
         localStorage.removeItem("token");
         updateLogin(false);
+        setLogged(0);
+        setAdmin(false);
     }
 
     return (

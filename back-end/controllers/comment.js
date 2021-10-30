@@ -26,7 +26,8 @@ module.exports = {
                         id: comment.id,
                         contenu: comment.contenu,
                         date: comment.date,
-                        username: user.username
+                        username: user.username,
+                        idUser: comment.idUser
                     };
                     listeComments.push(valeur);
                     compteur++;

@@ -4,28 +4,12 @@ import Post from "./Post";
 import Change from "./Change";
 import Comments from './Comments';
 import NewMessage from "./NewMessage";
+import Delete from "./Delete";
 
 
-function Messages ({idUsed, setId}) {
+function Messages ({idUsed, setId, admin, idLogged}) {
     const [post, setPost] = useState(null);
     const [postList, setList] = useState(null);
-
-    function messageDelete() {
-        let baseURL = `http://localhost:3001/api/post/${idUsed}`;
-        let token = localStorage.getItem("token");
-        axios.delete(baseURL, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }
-        })
-        .then(() => {
-            alert("Message supprimé");
-            setId(0);
-        })
-        .catch(() => {
-            alert("Problème lors de la suppression du message!");
-        });
-    }
     
     useEffect(() => {
         if (idUsed === 0) {
@@ -54,7 +38,7 @@ function Messages ({idUsed, setId}) {
                         <Post titre={titre} contenu={contenu} username={username} date={date} inList={true}/>
                     </div>
                 ))}
-                <NewMessage idUsed={idUsed} setId={setId}/>
+                <NewMessage setId={setId}/>
             </div> 
         )
         : (
@@ -62,10 +46,10 @@ function Messages ({idUsed, setId}) {
                 <p className="bouton--retour" onClick={() => setId(0)}> Retour </p>
                 <div className="post--zone">
                     <Post titre={post.titre} contenu={post.contenu} username={post.username} date={post.date} inList={false}/>
-                    <p className="text--action" onClick={() => messageDelete()}>Supprimer le post</p>
-                    <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} />
+                    <Delete idPost={idUsed} setId={setId} idUsed={post.idUser} admin={admin} idLogged={idLogged} type="Message"/>
+                    <Change  idUsed={idUsed} setId={setId} titre={post.titre} contenu={post.contenu} user={post.idUser} admin={admin} idLogged={idLogged}/>
                 </div>
-                <Comments idUsed={idUsed} setId={setId}/>
+                <Comments idUsed={idUsed} setId={setId} admin={admin} idLogged={idLogged}/>
             </div> 
         )
     );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../styles/NewMessage.css"
 
-function NewMessage ({idUsed, setId}) {
+function NewMessage ({setId}) {
     const [titre, updateTitre] = useState("");
     const [corps, updateCorps] = useState("");
 	const [creating, setCreate] = useState(false);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Change({idUsed, setId, titre, contenu}) {
+function Change({idUsed, setId, titre, contenu, user, admin, idLogged}) {
     const [newtitre, updateTitre] = useState(titre);
     const [corps, updateCorps] = useState(contenu);
 	const [modifying, setModify] = useState(false);
@@ -29,8 +29,8 @@ function Change({idUsed, setId, titre, contenu}) {
             .catch(() => alert(`Erreur lors de la Modification du post.`));
         }
     }
-
-	return ( modifying ? (
+    if ((admin === true) || (user === idLogged)) {
+        return ( modifying ? (
 		<div className="create--post">
 			<p className="text--action" onClick={() => setModify(false)}>
 				Annuler la modification
@@ -52,6 +52,10 @@ function Change({idUsed, setId, titre, contenu}) {
 			</p>
 	)
     );
+    } else {
+        return null;
+    }
+	
 }
 
 export default Change

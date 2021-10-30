@@ -3,7 +3,7 @@ import Formulaire from './Formulaire';
 import Contenu from './Contenu';
 import "../styles/Main.css"
 
-function Main ({logged, updateLogin, form, updateForm}) {
+function Main ({logged, updateLogin, form, admin, setAdmin, idLogged, setLogged}) {
     const [idUsed, setId] = useState(0);
     const [contenu, updateContenu] = useState("Messages");
 
@@ -27,10 +27,10 @@ function Main ({logged, updateLogin, form, updateForm}) {
                 <li onClick={() => goUsers()}>Utilisateurs</li>
                 <li onClick={() => goMessages()}>Messages</li>
             </ul>
-            <Contenu logged={logged} updateLogin={updateLogin} contenu={contenu} updateContenu={updateContenu} idUsed={idUsed} setId={setId}/>
+            <Contenu updateLogin={updateLogin} contenu={contenu} idUsed={idUsed} setId={setId} admin={admin} idLogged={idLogged}/>
         </main> :  
         <main className="contenu">
-            <Formulaire logged={logged} updateLogin={updateLogin} form={form} updateForm={updateForm}/>
+            <Formulaire updateLogin={updateLogin} form={form} setAdmin={setAdmin} setLogged={setLogged}/>
         </main>
     )
 }

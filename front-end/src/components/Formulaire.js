@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import '../styles/Formulaire.css'
 
-function Formulaire ({logged, updateLogin, form, updateForm}) {
+function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
     const [name, updateName] = useState("");
     const [mail, updateMail] = useState("");
     const [password, updatePass] = useState("");
@@ -21,6 +21,10 @@ function Formulaire ({logged, updateLogin, form, updateForm}) {
         axios.post(loginURL, user)
         .then((response) => {
             localStorage.setItem("token",response.data.token);
+            if (response.data.admin === 1) {
+                setAdmin(true);
+            }
+            setLogged(response.data.id);
             updateLogin(true);
         })
         .catch((error) => {

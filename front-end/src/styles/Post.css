@@ -20,6 +20,7 @@
     max-width: 60%;
     width: 30%;
     margin: auto;
+    margin-bottom: 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -32,6 +33,7 @@
 
 .post--desc {
     width: 100%;
+    margin-bottom: 20px;
     background-color: #cacaca;
     display: flex;
     flex-wrap: wrap;
