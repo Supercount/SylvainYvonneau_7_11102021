@@ -9,20 +9,24 @@ function NewMessage ({setId}) {
 
     function createMessage (e) {
         e.preventDefault();
-        const post = {titre : titre, contenu: corps};
-        let postURL = `http://localhost:3001/api/post/`;
-        let token = localStorage.getItem("token");
-        axios.post(postURL,post, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }}
-        )
-        .then((retour) => {
-            const identifiant = retour.data.postId;
-            alert("Post créé");
-            setId(identifiant);
-        })
-        .catch((error) => alert(`Erreur lors de la création du post : ${error}`))
+        if (titre === '' || corps === '') {
+            alert("Veuillez remplir tous les champs");
+        } else { 
+            const post = {titre : titre, contenu: corps};
+            let postURL = `http://localhost:3001/api/post/`;
+            let token = localStorage.getItem("token");
+            axios.post(postURL,post, {
+                headers: {
+                  Authorization: 'Bearer ' + token
+                }}
+            )
+            .then((retour) => {
+                const identifiant = retour.data.postId;
+                alert("Post créé");
+                setId(identifiant);
+            })
+            .catch((error) => alert(`Erreur lors de la création du post : ${error}`))
+        }
     }
 
     return ( creating ? (

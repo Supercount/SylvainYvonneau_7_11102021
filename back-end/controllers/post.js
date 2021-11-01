@@ -140,7 +140,7 @@ module.exports = {
         let newContent = req.body.contenu;
         let writer = jwt.recupereId(req);
         let dateCreate = Date.now();
-        if ( newTitle == null || newContent == null) {
+        if ( newTitle == "" || newContent == "") {
             return res.status(400).json({error: "Paramètres manquants"});
         }
         Post.create({

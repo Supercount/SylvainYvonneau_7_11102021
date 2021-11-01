@@ -34,7 +34,7 @@ function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
 
     function signup(e) {
         e.preventDefault();
-        if ((mail === '' || name === '' || password === '')) {
+        if (mail === '' || name === '' || password === '') {
             alert("Veuillez remplir tous les champs");
         } else {
             const user = {email: mail, username: name, password: password}

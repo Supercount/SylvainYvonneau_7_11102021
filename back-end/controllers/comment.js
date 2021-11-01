@@ -50,6 +50,9 @@ module.exports = {
         let post = req.params.idpost;
         let writer = jwt.recupereId(req);
         let dateCreate = Date.now();
+        if (newContent == "") {
+            return res.status(400).json({error: "Paramètres manquants"});
+        }
         Comment.create({
             contenu: newContent,
             idPost: post,

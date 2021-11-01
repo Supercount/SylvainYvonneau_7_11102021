@@ -12,21 +12,25 @@ function Comments ({idUsed, setId, admin, idLogged}) {
     
     function postComment(e) {
         e.preventDefault();
-        const commentaire = {contenu: reponse};
-        updateReponse("");
-        let postURL = `http://localhost:3001/api/post/${idUsed}/comment/`;
-        let token = localStorage.getItem("token");
-        axios.post(postURL,commentaire, {
-            headers: {
-              Authorization: 'Bearer ' + token
-            }}
-        )
-        .then(() => {
-            setId(0);
-            setId(idUsed);
-            alert("Réponse postée");
-        })
-        .catch((error) => alert(`Erreur lors de l'envoi du commentaire : ${error}`))
+        if (reponse === '') {
+            alert("Veuillez écrire une réponse!");
+        } else {
+            const commentaire = {contenu: reponse};
+            updateReponse("");
+            let postURL = `http://localhost:3001/api/post/${idUsed}/comment/`;
+            let token = localStorage.getItem("token");
+            axios.post(postURL,commentaire, {
+                headers: {
+                  Authorization: 'Bearer ' + token
+                }}
+            )
+            .then(() => {
+                setId(0);
+                setId(idUsed);
+                alert("Réponse postée");
+            })
+            .catch((error) => alert(`Erreur lors de l'envoi du commentaire : ${error}`))
+        }
     }
 
     useEffect(() => {
