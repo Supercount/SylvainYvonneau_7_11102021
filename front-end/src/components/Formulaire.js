@@ -6,6 +6,7 @@ function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
     const [name, updateName] = useState("");
     const [mail, updateMail] = useState("");
     const [password, updatePass] = useState("");
+    const [passVerif, updateVerif] = useState("");
     let loginURL = "http://localhost:3001/api/auth/login";
     let signupURL = "http://localhost:3001/api/auth/signup";
 
@@ -34,15 +35,19 @@ function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
 
     function signup(e) {
         e.preventDefault();
-        if (mail === '' || name === '' || password === '') {
-            alert("Veuillez remplir tous les champs");
+        if (passVerif !== password) {
+            alert("Les deux mots de passe renseignés ne sont pas identiques!");
         } else {
-            const user = {email: mail, username: name, password: password}
-            axios.post(signupURL, user)
-            .then((response) => {
-                alert(`${response.data.message}. Vous pouvez vous identifier`)
-            })
-            .catch(() => alert(`Inscription refusée`));
+            if (mail === '' || name === '' || password === '') {
+                alert("Veuillez remplir tous les champs");
+            } else {
+                const user = {email: mail, username: name, password: password}
+                axios.post(signupURL, user)
+                .then((response) => {
+                    alert(`${response.data.message}. Vous pouvez vous identifier`)
+                })
+                .catch(() => alert(`Inscription refusée`));
+            }
         }
     }
 
@@ -75,6 +80,10 @@ function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
             <label>
                 Mot de passe : 
                 <input className="formulaire--champ" type="password" value={password} onChange={(e) => updatePass(e.target.value)}/>
+            </label>
+            <label>
+                Confirmez le mot de passe : 
+                <input className="formulaire--champ" type="password" value={passVerif} onChange={(e) => updateVerif(e.target.value)}/>
             </label>
             <input className="formulaire--bouton" type="submit" onClick={signup} value="S'inscrire" />
         </form>
