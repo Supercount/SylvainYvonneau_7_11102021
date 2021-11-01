@@ -11,7 +11,7 @@ module.exports = {
         let newName = req.body.username;
         let newPass = req.body.password;
         let admin = (req.body.isAdmin) ? 1 : 0
-        if ( newMail == null || newName == null || newPass == null ) {
+        if ( newMail == "" || newName == "" || newPass == "" ) {
             return res.status(400).json({error: "Paramètres manquants"});
         }
         bcryptjs.hash(newPass, 10)

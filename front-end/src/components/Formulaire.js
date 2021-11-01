@@ -34,12 +34,16 @@ function Formulaire ({updateLogin, form, setAdmin, setLogged}) {
 
     function signup(e) {
         e.preventDefault();
-        const user = {email: mail, username: name, password: password}
-        axios.post(signupURL, user)
-        .then((response) => {
-            alert(`${response.data.message}. Vous pouvez vous identifier`)
-        })
-        .catch(() => alert(`Inscription refusée`));
+        if ((mail === '' || name === '' || password === '')) {
+            alert("Veuillez remplir tous les champs");
+        } else {
+            const user = {email: mail, username: name, password: password}
+            axios.post(signupURL, user)
+            .then((response) => {
+                alert(`${response.data.message}. Vous pouvez vous identifier`)
+            })
+            .catch(() => alert(`Inscription refusée`));
+        }
     }
 
     return ( (form === "Connexion") ? 
